@@ -1,0 +1,13 @@
+LICENSE.md
+README.md
+setup.py
+modules/__init__.py
+modules/cfa.py
+modules/drycombustion.py
+modules/ghg.py
+modules/icp.py
+modules/liquidtoc.py
+readInstruments.egg-info/PKG-INFO
+readInstruments.egg-info/SOURCES.txt
+readInstruments.egg-info/dependency_links.txt
+readInstruments.egg-info/top_level.txt
