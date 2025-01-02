@@ -1,12 +1,3 @@
-Metadata-Version: 2.1
-Name: readInstruments
-Version: 0.1
-Summary: Read Instrument data from GSWRL Temple, TX
-Author: John A. Sorensen
-Author-email: john.sorensen@usda.gov
-Description-Content-Type: text/markdown
-License-File: LICENSE.md
-
 # read_instruments
 
 A python package that will take the output file from an analytical instrument at the USDA-ARS Grassland Soil Water Research Laboratory in Temple, TX.
