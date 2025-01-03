@@ -28,9 +28,10 @@ class SCION456():
             file_name (.csv): Output csv file from instrument
         """
         self.file_name = file_name
-        self.instrument_info = dict.fromkeys(["Run  File",
+        self.instrument_info = dict.fromkeys([
+                         "Run File",
                          "Method",
-                         "Sample ID",
+                         "Sample ID ",
                          "Inject Date",
                          "Recalc Date",
                          "Operator",
@@ -61,7 +62,7 @@ class SCION456():
         self.totals = dict.fromkeys(["Result",
                                      "Area"])
 
-    def GHG_Data(self):
+    def data(self):
         """
         Opens csv file and appends data to appropriate dictionaries
 
