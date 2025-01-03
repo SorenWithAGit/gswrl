@@ -133,8 +133,8 @@ class MaxCube():
             df.columns[3] : "N Area",
             df.columns[4] : "C Area",
             df.columns[5] : "%N",
-            df.columns[6] : "$C",
-            df.columns[7] : "CN Ration"})
+            df.columns[6] : "%C",
+            df.columns[7] : "CN Ratio"})
         return df
 
 class ThermoFlash():
