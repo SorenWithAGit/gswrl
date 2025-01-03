@@ -3,4 +3,4 @@
 ./.venv
 ./build
 ./dist
-./tests/test.py
+./tests
