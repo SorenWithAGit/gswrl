@@ -51,7 +51,7 @@ class San():
         Data = self.data
         drop_lst = []
         for ind in range(len(Data)):
-            if str(self.Data.iloc[ind]["SampleType"].replace(" ", "")) != str("U"):
+            if str(self.data.iloc[ind]["SampleType"].replace(" ", "")) != str("U"):
                 drop_lst.append(ind)
         df = Data.drop(drop_lst, axis = 0)
         df = df.drop(["NeedleNumber",
