@@ -1,2 +1,6 @@
 ./readInstruments.egg-info
-./test.py
+./.idea
+./.venv
+./build
+./dist
+./tests/test.py
