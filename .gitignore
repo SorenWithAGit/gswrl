@@ -1,6 +1,0 @@
-./readInstruments.egg-info
-./.idea
-./.venv
-./build
-./dist
-./tests
