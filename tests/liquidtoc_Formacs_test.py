@@ -15,8 +15,6 @@ loop_df = pd.DataFrame(columns = [
 dirname = r"C:\Users\john.sorensen\Box\programming\python\formacs_toc\Riesel Grazing Soils\Formacs TOC-TN"
 files = glob.glob(dirname + '//' + '*', recursive = True)
 print("Number of Files: " + str(len(files)))
-for filename in files:
-    print(filename)
 for file in files:
     run = FormacsTOC(file)
     data = run.data()
