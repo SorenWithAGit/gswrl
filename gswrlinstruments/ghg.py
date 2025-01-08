@@ -84,13 +84,13 @@ class SCION456():
             for key in self.instrument_info.keys():
                 if str(key) in sline:
                     self.instrument_info[key] = sline[1]
-            if str(1) in str(sline[0]):
+            if "1" in str(sline[0]):
                 for key, value in zip(self.co2_data.keys(), sline):
                     self.co2_data[key] = value
-            if str(2) in str(sline[0]):
+            if "2" in str(sline[0]):
                 for key, value in zip(self.ch4_data.keys(), sline):
                     self.ch4_data[key] = value
-            if str(3) in str(sline[0]):
+            if "3" in str(sline[0]):
                 for key, value in zip(self.n2o_data.keys(), sline):
                     self.n2o_data[key] = value
             if "Totals" in str(sline[0]):
