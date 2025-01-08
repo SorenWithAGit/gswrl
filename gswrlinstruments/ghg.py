@@ -96,14 +96,14 @@ class SCION456():
             if "Totals" in str(sline[0]):
                 self.totals["Result"] = sline[4]
                 self.totals["Area"] = sline[5]
-        for key, value in self.instrument_info.items():
-            print((key, value))
-        for key, value in self.co2_data.items():
-            print((key, value))
-        for key, value in self.ch4_data.items():
-            print((key, value))
-        for key, value in self.n2o_data.items():
-            print((key, value))
-        for key, value in self.totals.items():
-            print((key, value))
+        # for key, value in self.instrument_info.items():
+        #     print((key, value))
+        # for key, value in self.co2_data.items():
+        #     print((key, value))
+        # for key, value in self.ch4_data.items():
+        #     print((key, value))
+        # for key, value in self.n2o_data.items():
+        #     print((key, value))
+        # for key, value in self.totals.items():
+        #     print((key, value))
         return [self.instrument_info, self.co2_data, self.ch4_data, self.n2o_data, self.totals]

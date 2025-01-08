@@ -113,6 +113,8 @@ class AA500():
     def data(self):
         """
         Function to read and manipulate data from the output SLK file.
+        Initial for loop is used to iterate through beginning lines of
+        the file and read the instrument/run info.
 
         Returns:
             ins: dictionary containing instrument/run info.
