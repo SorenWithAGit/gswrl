@@ -37,6 +37,8 @@ class agilent():
         self.file_name = file_name
         self.run_df = pd.read_excel(self.file_name)
 
+
+
     def data(self):
         """
         This function manipulates the self.run_df DataFrame.
