@@ -45,7 +45,84 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.AA500(file)
             data = run.data()
             AA500_df = pd.concat([AA500_df, data[1]])
-        
+    ####################################################################
+
+    ####################################################################
+    # Logic to differentiate arguments passed for Dry Combustion Data
+    if module_name == "drycombustion" and class_name == "ELIII" and class_func == "data":
+        eliii_df = pd.DataFrame(columns = [
+            "Sample Name",
+            "Date/Time",
+            "Weight (mg)",
+            "N Area",
+            "C Area",
+            "%N",
+            "%C",
+            "CN Ratio" ])
+        for file in files:
+            run = gs.drycombustion.ELIII(file)
+            data = run.data()
+            eliii_df = pd.concat([eliii_df, data])
+
+    elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "excel_data":
+        max_excel_df = pd.DataFrame(columns = [
+            "Sample Name",
+            "Date/Time",
+            "Weight (mg)",
+            "N Area",
+            "C Area",
+            "%N",
+            "%C",
+            "CN Ratio" ])
+        for file in files:
+            run = gs.drycombustion.MaxCube(file)
+            data = run.excel_data()
+            max_excel_df = pd.concat([max_excel_df, data])
+
+    elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "csv_data":
+        max_csv_df = pd.DataFrame(columns = [
+            "Sample Name",
+            "Date/Time",
+            "Weight (mg)",
+            "N Area",
+            "C Area",
+            "%N",
+            "%C",
+            "CN Ratio" ])       
+        for file in files:
+            run = gs.drycombustion.MaxCube(file)
+            data = run.csv_data()
+            max_csv_df = pd.concat([max_csv_df, data])
+
+    #Save for Thermo Data
+
+    ####################################################################
+
+    ####################################################################
+    
+    #Save for GHG Data
+
+    ####################################################################
+
+    ####################################################################
+    # Logic to differentiate arguments passed for liquid TOC Data.
+    if module_name == "liquidtoc" and class_name == "FormacsTOC" and class_func == "data":
+        toc_df = pd.DataFrame(columns = [
+            "Sample ID",
+            "TC Area",
+            "IC Area",
+            "TN Area",
+            "TOC (ppm)",
+            "TC (ppm)",
+            "TC (ppm)",
+            "IC (ppm)",
+            "TN (ppm)"])
+        for file in files:
+            run = gs.liquidtoc.FormacsTOC(file)
+            data = run.data()
+            toc_df = pd.concat([toc_df, data[0]])
+    ####################################################################
+
     ####################################################################
     # Logic to differentiate arguments passed for ICP Data.
     if module_name == "icp" and class_name == "agilent" and class_func == "data":
@@ -69,7 +146,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             agilent_df = pd.concat([agilent_df, data])
         print(agilent_df)
 
-    if module_name == "icp" and class_name == "varian" and class_func == "data":
+    elif module_name == "icp" and class_name == "varian" and class_func == "data":
         varian_df = pd.DataFrame(columns = [
             "Sample Labels",    
             "Aluminium (ppm)",
@@ -89,6 +166,8 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             data = icp_varian.data()
             varian_df = pd.concat([varian_df, data])
         print(varian_df)
+    ####################################################################
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
