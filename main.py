@@ -21,6 +21,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.San(file)
             data = run.DI_H3A_data()
             DI_H3A_df = pd.concat([DI_H3A_df, data])
+        return DI_H3A_df
     
     elif module_name == "cfa" and class_name == "San" and class_func == "KCL_data":
         KCl_df = pd.DataFrame(columns = [
@@ -33,6 +34,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.San(file)
             data = run.KCL_data()
             KCl_df  = pd.concat(KCl_df, data)
+        return KCl_df
 
     elif module_name == "cfa" and class_name == "AA500" and class_func == "data":
         AA500_df = pd.DataFrame(columns = [
@@ -45,6 +47,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.AA500(file)
             data = run.data()
             AA500_df = pd.concat([AA500_df, data[1]])
+        return AA500_df
     ####################################################################
 
     ####################################################################
@@ -63,6 +66,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.ELIII(file)
             data = run.data()
             eliii_df = pd.concat([eliii_df, data])
+        return eliii_df
 
     elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "excel_data":
         max_excel_df = pd.DataFrame(columns = [
@@ -78,6 +82,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.MaxCube(file)
             data = run.excel_data()
             max_excel_df = pd.concat([max_excel_df, data])
+        return max_excel_df
 
     elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "csv_data":
         max_csv_df = pd.DataFrame(columns = [
@@ -93,6 +98,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.MaxCube(file)
             data = run.csv_data()
             max_csv_df = pd.concat([max_csv_df, data])
+        return max_csv_df
 
     elif module_name == "drycombustion" and class_name == "ThermoFlash" and class_func == "data":
         instrument_df = pd.DataFrame(columns = ["Method Name",
@@ -123,6 +129,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             instrument_df = pd.concat([instrument_df, ins_data])
             nitrogen_df = pd.concat([nitrogen_df, n_data])
             carbon_df = pd.concat([carbon_df, c_data])
+        return [instrument_df, nitrogen_df, carbon_df]
     ####################################################################
 
     ####################################################################
@@ -169,6 +176,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             co2_data = pd.concat([co2_data, co2_run_data])
             ch4_data = pd.concat([ch4_data, ch4_run_data])
             n2o_data = pd.concat([n2o_data, n2o_run_data])
+        return [instrument_info, co2_data, ch4_data, n2o_data]
     ####################################################################
 
     ####################################################################
@@ -188,6 +196,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.liquidtoc.FormacsTOC(file)
             data = run.data()
             toc_df = pd.concat([toc_df, data[0]])
+        return toc_df
     ####################################################################
 
     ####################################################################
@@ -211,7 +220,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_agilent = gs.icp.agilent(file)
             data = icp_agilent.data()
             agilent_df = pd.concat([agilent_df, data])
-
+        return agilent_df
 
     elif module_name == "icp" and class_name == "varian" and class_func == "data":
         varian_df = pd.DataFrame(columns = [
@@ -232,6 +241,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_varian = gs.icp.varian(file)
             data = icp_varian.data()
             varian_df = pd.concat([varian_df, data])
+        return varian_df
     ####################################################################
 
 
