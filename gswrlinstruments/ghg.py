@@ -88,7 +88,6 @@ class SCION456():
             if "1" in str(sline[0]):
                 for key, value in zip(self.co2_data.keys(), sline):
                     self.co2_data[key] = [value]
-                    # self.co2_data["Sample ID"] = self.instrument_info["Sample ID"]
             if "2" in str(sline[0]):
                 for key, value in zip(self.ch4_data.keys(), sline):
                     self.ch4_data[key] = [value]

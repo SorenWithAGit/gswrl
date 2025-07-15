@@ -4,7 +4,7 @@ import glob
 import pandas as pd
 from pathlib import Path
 
-def main(input_path, file_type, module_name, class_name, class_func) -> None:
+def main(input_path, file_type, module_name, class_name, class_func, output_path) -> None:
     
     files = glob.glob(str(input_path) + "//" + "*." + str(file_type), recursive = True)
     
@@ -21,6 +21,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.San(file)
             data = run.DI_H3A_data()
             DI_H3A_df = pd.concat([DI_H3A_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    DI_H3A_df.to_excel(writer, index = False)
         return DI_H3A_df
     
     elif module_name == "cfa" and class_name == "San" and class_func == "KCL_data":
@@ -34,6 +37,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.San(file)
             data = run.KCL_data()
             KCl_df  = pd.concat(KCl_df, data)
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    KCl_df.to_excel(writer, index = False)
         return KCl_df
 
     elif module_name == "cfa" and class_name == "AA500" and class_func == "data":
@@ -47,6 +53,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.cfa.AA500(file)
             data = run.data()
             AA500_df = pd.concat([AA500_df, data[1]])
+        if args.output_path is not None:
+            with pd.ExcelWriter(output_path) as writer:
+                AA500_df.to_excel(writer, index = False)
         return AA500_df
     ####################################################################
 
@@ -66,6 +75,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.ELIII(file)
             data = run.data()
             eliii_df = pd.concat([eliii_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    eliii_df.to_excel(writer, index = False)
         return eliii_df
 
     elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "excel_data":
@@ -82,6 +94,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.MaxCube(file)
             data = run.excel_data()
             max_excel_df = pd.concat([max_excel_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    max_excel_df.to_excel(writer, index = False)
         return max_excel_df
 
     elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "csv_data":
@@ -98,6 +113,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.drycombustion.MaxCube(file)
             data = run.csv_data()
             max_csv_df = pd.concat([max_csv_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    max_csv_df.to_excel(writer, index = False)
         return max_csv_df
 
     elif module_name == "drycombustion" and class_name == "ThermoFlash" and class_func == "data":
@@ -129,6 +147,11 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             instrument_df = pd.concat([instrument_df, ins_data])
             nitrogen_df = pd.concat([nitrogen_df, n_data])
             carbon_df = pd.concat([carbon_df, c_data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    instrument_df.to_excel(writer, sheet_name = "Instrument Info", index = False)
+                    nitrogen_df.to_excel(writer, sheet_name = "Nitrogen Data", index = False)
+                    carbon_df.to_excel(writer, sheet_name = "Carbon Data", index = False)
         return [instrument_df, nitrogen_df, carbon_df]
     ####################################################################
 
@@ -177,6 +200,12 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             co2_data = pd.concat([co2_data, co2_run_data]).reset_index(drop = True)
             ch4_data = pd.concat([ch4_data, ch4_run_data]).reset_index(drop = True)
             n2o_data = pd.concat([n2o_data, n2o_run_data]).reset_index(drop = True)
+        if args.output_path is not None:
+            with pd.ExcelWriter(output_path) as writer:
+                    instrument_info.to_excel(writer, sheet_name = "Instrument Info", index = True)
+                    co2_data.to_excel(writer, sheet_name = "CO2 Data", index = True)
+                    ch4_data.to_excel(writer, sheet_name = "CH4 Data", index = True)
+                    n2o_data.to_excel(writer, sheet_name = "N2O Data", index = True)
         return [instrument_info, co2_data, ch4_data, n2o_data]
     ####################################################################
 
@@ -201,6 +230,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_agilent = gs.icp.agilent(file)
             data = icp_agilent.data()
             agilent_df = pd.concat([agilent_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    agilent_df.to_excel(writer, index = False)
         return agilent_df
 
     elif module_name == "icp" and class_name == "varian" and class_func == "data":
@@ -222,6 +254,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_varian = gs.icp.varian(file)
             data = icp_varian.data()
             varian_df = pd.concat([varian_df, data])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    varian_df.to_excel(writer, index = False)
         return varian_df
     ####################################################################
 
@@ -242,6 +277,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             run = gs.liquidtoc.FormacsTOC(file)
             data = run.data()
             toc_df = pd.concat([toc_df, data[0]])
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    toc_df.to_excel(writer, index = False)
         return toc_df
     ####################################################################
 
@@ -264,5 +302,8 @@ if __name__ == "__main__":
     parser.add_argument("--class_func",
                         type = str,
                         required = True)
+    parser.add_argument("--output_path",
+                        type = str,
+                        required = False)
     args = parser.parse_args()
-    main(args.input_path, args.file_type, args.module_name, args.class_name, args.class_func)
+    main(args.input_path, args.file_type, args.module_name, args.class_name, args.class_func, args.output_path)
