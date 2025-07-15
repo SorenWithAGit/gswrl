@@ -36,7 +36,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
         for file in files:
             run = gs.cfa.San(file)
             data = run.KCL_data()
-            KCl_df  = pd.concat(KCl_df, data)
+            KCl_df  = pd.concat([KCl_df, data])
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     KCl_df.to_excel(writer, index = False)
