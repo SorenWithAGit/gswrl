@@ -181,26 +181,6 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
     ####################################################################
 
     ####################################################################
-    # Logic to differentiate arguments passed for liquid TOC Data.
-    if module_name == "liquidtoc" and class_name == "FormacsTOC" and class_func == "data":
-        toc_df = pd.DataFrame(columns = [
-            "Sample ID",
-            "TC Area",
-            "IC Area",
-            "TN Area",
-            "TOC (ppm)",
-            "TC (ppm)",
-            "TC (ppm)",
-            "IC (ppm)",
-            "TN (ppm)"])
-        for file in files:
-            run = gs.liquidtoc.FormacsTOC(file)
-            data = run.data()
-            toc_df = pd.concat([toc_df, data[0]])
-        return toc_df
-    ####################################################################
-
-    ####################################################################
     # Logic to differentiate arguments passed for ICP Data.
     if module_name == "icp" and class_name == "agilent" and class_func == "data":
         agilent_df = pd.DataFrame(columns = [
@@ -243,6 +223,26 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             data = icp_varian.data()
             varian_df = pd.concat([varian_df, data])
         return varian_df
+    ####################################################################
+
+    ####################################################################
+    # Logic to differentiate arguments passed for liquid TOC Data.
+    if module_name == "liquidtoc" and class_name == "FormacsTOC" and class_func == "data":
+        toc_df = pd.DataFrame(columns = [
+            "Sample ID",
+            "TC Area",
+            "IC Area",
+            "TN Area",
+            "TOC (ppm)",
+            "TC (ppm)",
+            "TC (ppm)",
+            "IC (ppm)",
+            "TN (ppm)"])
+        for file in files:
+            run = gs.liquidtoc.FormacsTOC(file)
+            data = run.data()
+            toc_df = pd.concat([toc_df, data[0]])
+        return toc_df
     ####################################################################
 
 
