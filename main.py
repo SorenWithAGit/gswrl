@@ -9,7 +9,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
     files = glob.glob(str(input_path) + "//" + "*." + str(file_type), recursive = True)
     
     ####################################################################
-    #Logic to differentiate arguments passed for CFA Data.
+    # Logic to differentiate arguments passed for CFA Data.
     if module_name == "cfa" and class_name == "San" and class_func == "DI_H3A_Data":
         DI_H3A_df = pd.DataFrame(columns = [
             "SampleIdentity",
@@ -94,14 +94,81 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             data = run.csv_data()
             max_csv_df = pd.concat([max_csv_df, data])
 
-    #Save for Thermo Data
-
+    elif module_name == "drycombustion" and class_name == "ThermoFlash" and class_func == "data":
+        instrument_df = pd.DataFrame(columns = ["Method Name",
+                                         "Method File",
+                                         "Chromatogram",
+                                         "Operator ID",
+                                         "Company Name",
+                                         "Analysed",
+                                         "Printed",
+                                         "Sample ID",
+                                         "Instrument Number",
+                                         "Analysis Type",
+                                         "Sample Weight",
+                                         "Calibration Method"])
+        nitrogen_df = pd.DataFrame(columns = ["Sample ID",
+                                            "% Nitrogen",
+                                            "Nitrogen Retention Time",
+                                            "Nitrogen Area"])
+        carbon_df = pd.DataFrame(columns = ["Sample ID",
+                                          "% Carbon",
+                                          "Carbon Retention Time",
+                                          "Carbon Area"])
+        for file in files:
+            run = gs.drycombustion.ThermoFlash(file)
+            ins_data = run.data()[0]
+            n_data = run.data()[1]
+            c_data = run.data()[2]
+            instrument_df = pd.concat([instrument_df, ins_data])
+            nitrogen_df = pd.concat([nitrogen_df, n_data])
+            carbon_df = pd.concat([carbon_df, c_data])
     ####################################################################
 
     ####################################################################
-    
-    #Save for GHG Data
-
+    # Logic for Greenhouse Gas Data
+    if module_name == "ghg" and class_name == "SCION456" and class_func == "data":
+        instrument_info = pd.DataFrame(columns = [
+                         "Run File",
+                         "Method",
+                         "Sample ID ",
+                         "Inject Date",
+                         "Recalc Date",
+                         "Operator",
+                         "Workstation",
+                         "Instrument",
+                         "Run Mode",
+                         "Peak Measurement",
+                         "Calculation Type",
+                         "Normalized?"])
+        co2_data = pd.DataFrame(columns = ["Analyte Number",
+                        "Peak Name",
+                        "Channel",
+                        "Retention Time",
+                        "Results",
+                        "Area"])
+        ch4_data = pd.DataFrame(columns = ["Analyte Number",
+                        "Peak Name",
+                        "Channel",
+                        "Retention Time",
+                        "Results",
+                        "Area"])
+        n2o_data = pd.DataFrame(columns = ["Analyte Number",
+                        "Peak Name",
+                        "Channel",
+                        "Retention Time",
+                        "Results",
+                        "Area"])
+        for file in files:
+            run = gs.ghg.SCION456(file)
+            instrument_run_data = pd.DataFrame(run.data()[0])
+            co2_run_data = pd.DataFrame(run.data()[1])
+            ch4_run_data = pd.DataFrame(run.data()[2])
+            n2o_run_data = pd.DataFrame(run.data()[3])
+            instrument_info = pd.concat([instrument_info,instrument_run_data])
+            co2_data = pd.concat([co2_data, co2_run_data])
+            ch4_data = pd.concat([ch4_data, ch4_run_data])
+            n2o_data = pd.concat([n2o_data, n2o_run_data])
     ####################################################################
 
     ####################################################################
@@ -144,7 +211,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_agilent = gs.icp.agilent(file)
             data = icp_agilent.data()
             agilent_df = pd.concat([agilent_df, data])
-        print(agilent_df)
+
 
     elif module_name == "icp" and class_name == "varian" and class_func == "data":
         varian_df = pd.DataFrame(columns = [
@@ -165,7 +232,6 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
             icp_varian = gs.icp.varian(file)
             data = icp_varian.data()
             varian_df = pd.concat([varian_df, data])
-        print(varian_df)
     ####################################################################
 
 

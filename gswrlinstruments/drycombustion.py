@@ -160,10 +160,12 @@ class ThermoFlash():
                                          "Analysis Type",
                                          "Sample Weight",
                                          "Calibration Method"])
-        self.nitrogen_dict = dict.fromkeys(["% Nitrogen",
+        self.nitrogen_dict = dict.fromkeys(["Sample ID",
+                                            "% Nitrogen",
                                             "Nitrogen Retention Time",
                                             "Nitrogen Area"])
-        self.carbon_dict = dict.fromkeys(["% Carbon",
+        self.carbon_dict = dict.fromkeys(["Sample ID",
+                                          "% Carbon",
                                           "Carbon Retention Time",
                                           "Carbon Area"])
         self.raw_df = pd.read_excel(self.file_name, engine = "xlrd")
@@ -215,10 +217,12 @@ class ThermoFlash():
         ins_dict["Sample Weight"] = smpl_wght
         ins_dict["Calibration Method"] = calib
         n_dict = self.nitrogen_dict
+        n_dict["Sample ID"] = sampleid
         n_dict["% Nitrogen"] = float(n_per)
         n_dict["Nitrogen Retention Time"] = n_ret
         n_dict["Nitrogen Area"] = n_area
         c_dict = self.carbon_dict
+        c_dict["Sample ID"] = sampleid
         c_dict["% Carbon"] =float( c_per)
         c_dict["Carbon Retention Time"] = c_ret
         c_dict["Carbon Area"] = c_area
