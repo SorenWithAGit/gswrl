@@ -123,9 +123,9 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
                                           "Carbon Area"])
         for file in files:
             run = gs.drycombustion.ThermoFlash(file)
-            ins_data = run.data()[0]
-            n_data = run.data()[1]
-            c_data = run.data()[2]
+            ins_data = pd.DataFrame(run.data()[0], index = 0).reset_index(drop = True)
+            n_data = pd.DataFrame(run.data()[1], index = 0).reset_index(drop = True)
+            c_data = pd.DataFrame(run.data()[2], index = 0).reset_index(drop = True)
             instrument_df = pd.concat([instrument_df, ins_data])
             nitrogen_df = pd.concat([nitrogen_df, n_data])
             carbon_df = pd.concat([carbon_df, c_data])
@@ -138,7 +138,7 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
         instrument_info = pd.DataFrame(columns = [
                          "Run File",
                          "Method",
-                         "Sample ID ",
+                         "Sample ID",
                          "Inject Date",
                          "Recalc Date",
                          "Operator",
@@ -148,7 +148,8 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
                          "Peak Measurement",
                          "Calculation Type",
                          "Normalized?"])
-        co2_data = pd.DataFrame(columns = ["Analyte Number",
+        co2_data = pd.DataFrame(columns = [
+                        "Analyte Number",
                         "Peak Name",
                         "Channel",
                         "Retention Time",
@@ -168,14 +169,14 @@ def main(input_path, file_type, module_name, class_name, class_func) -> None:
                         "Area"])
         for file in files:
             run = gs.ghg.SCION456(file)
-            instrument_run_data = pd.DataFrame(run.data()[0])
-            co2_run_data = pd.DataFrame(run.data()[1])
-            ch4_run_data = pd.DataFrame(run.data()[2])
-            n2o_run_data = pd.DataFrame(run.data()[3])
-            instrument_info = pd.concat([instrument_info,instrument_run_data])
-            co2_data = pd.concat([co2_data, co2_run_data])
-            ch4_data = pd.concat([ch4_data, ch4_run_data])
-            n2o_data = pd.concat([n2o_data, n2o_run_data])
+            instrument_run_data = run.data()[0]
+            co2_run_data = run.data()[1]
+            ch4_run_data = run.data()[2]
+            n2o_run_data = run.data()[3]
+            instrument_info = pd.concat([instrument_info, instrument_run_data]).reset_index(drop = True)
+            co2_data = pd.concat([co2_data, co2_run_data]).reset_index(drop = True)
+            ch4_data = pd.concat([ch4_data, ch4_run_data]).reset_index(drop = True)
+            n2o_data = pd.concat([n2o_data, n2o_run_data]).reset_index(drop = True)
         return [instrument_info, co2_data, ch4_data, n2o_data]
     ####################################################################
 

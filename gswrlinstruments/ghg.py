@@ -31,7 +31,7 @@ class SCION456():
         self.instrument_info = dict.fromkeys([
                          "Run File",
                          "Method",
-                         "Sample ID ",
+                         "Sample ID",
                          "Inject Date",
                          "Recalc Date",
                          "Operator",
@@ -41,7 +41,8 @@ class SCION456():
                          "Peak Measurement",
                          "Calculation Type",
                          "Normalized?"])
-        self.co2_data = dict.fromkeys(["Analyte Number",
+        self.co2_data = dict.fromkeys([
+                        "Analyte Number",
                         "Peak Name",
                         "Channel",
                         "Retention Time",
@@ -86,16 +87,21 @@ class SCION456():
                     self.instrument_info[key] = sline[1]
             if "1" in str(sline[0]):
                 for key, value in zip(self.co2_data.keys(), sline):
-                    self.co2_data[key] = value
+                    self.co2_data[key] = [value]
+                    # self.co2_data["Sample ID"] = self.instrument_info["Sample ID"]
             if "2" in str(sline[0]):
                 for key, value in zip(self.ch4_data.keys(), sline):
-                    self.ch4_data[key] = value
+                    self.ch4_data[key] = [value]
             if "3" in str(sline[0]):
                 for key, value in zip(self.n2o_data.keys(), sline):
-                    self.n2o_data[key] = value
+                    self.n2o_data[key] = [value]
             if "Totals" in str(sline[0]):
-                self.totals["Result"] = sline[4]
-                self.totals["Area"] = sline[5]
+                self.totals["Result"] = [sline[4]]
+                self.totals["Area"] = [sline[5]]
+        ins_info = pd.DataFrame(self.instrument_info, index = [0])
+        co2_df = pd.DataFrame(self.co2_data, index = [0])
+        ch4_df = pd.DataFrame(self.ch4_data, index = [0])
+        n2o_df = pd.DataFrame(self.n2o_data, index = [0])
         # for key, value in self.instrument_info.items():
         #     print((key, value))
         # for key, value in self.co2_data.items():
@@ -106,4 +112,4 @@ class SCION456():
         #     print((key, value))
         # for key, value in self.totals.items():
         #     print((key, value))
-        return [self.instrument_info, self.co2_data, self.ch4_data, self.n2o_data, self.totals]
+        return [ins_info, co2_df, ch4_df, n2o_df]
