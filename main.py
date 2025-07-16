@@ -4,13 +4,13 @@ import glob
 import pandas as pd
 from pathlib import Path
 
-def main(input_path, file_type, module_name, class_name, class_func, output_path) -> None:
+def main(input_path, file_type, module, m_class, function, output_path) -> None:
     
     files = glob.glob(str(input_path) + "//" + "*." + str(file_type), recursive = True)
     
     ####################################################################
     # Logic to differentiate arguments passed for CFA Data.
-    if module_name == "cfa" and class_name == "San" and class_func == "DI_H3A_Data":
+    if module == "cfa" and m_class == "San" and function == "DI_H3A_Data":
         DI_H3A_df = pd.DataFrame(columns = [
             "SampleIdentity",
             "Nitrate Nitrite- Results[mg N/liter]",
@@ -26,7 +26,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     DI_H3A_df.to_excel(writer, index = False)
         return DI_H3A_df
     
-    elif module_name == "cfa" and class_name == "San" and class_func == "KCL_data":
+    elif module == "cfa" and m_class == "San" and function == "KCL_data":
         KCl_df = pd.DataFrame(columns = [
             "SampleIdentity",
             "Nitrate Nitrite- Results[mg N/liter]",
@@ -42,7 +42,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     KCl_df.to_excel(writer, index = False)
         return KCl_df
 
-    elif module_name == "cfa" and class_name == "AA500" and class_func == "data":
+    elif module == "cfa" and m_class == "AA500" and function == "data":
         AA500_df = pd.DataFrame(columns = [
              "Sample ID",
              "Nitrate/Nitrite",
@@ -61,7 +61,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
 
     ####################################################################
     # Logic to differentiate arguments passed for Dry Combustion Data
-    if module_name == "drycombustion" and class_name == "ELIII" and class_func == "data":
+    if module == "drycombustion" and m_class == "ELIII" and function == "data":
         eliii_df = pd.DataFrame(columns = [
             "Sample Name",
             "Date/Time",
@@ -80,7 +80,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     eliii_df.to_excel(writer, index = False)
         return eliii_df
 
-    elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "excel_data":
+    elif module == "drycombustion" and m_class == "MaxCube" and function == "excel_data":
         max_excel_df = pd.DataFrame(columns = [
             "Sample Name",
             "Date/Time",
@@ -99,7 +99,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     max_excel_df.to_excel(writer, index = False)
         return max_excel_df
 
-    elif module_name == "drycombustion" and class_name == "MaxCube" and class_func == "csv_data":
+    elif module == "drycombustion" and m_class == "MaxCube" and function == "csv_data":
         max_csv_df = pd.DataFrame(columns = [
             "Sample Name",
             "Date/Time",
@@ -118,7 +118,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     max_csv_df.to_excel(writer, index = False)
         return max_csv_df
 
-    elif module_name == "drycombustion" and class_name == "ThermoFlash" and class_func == "data":
+    elif module == "drycombustion" and m_class == "ThermoFlash" and function == "data":
         instrument_df = pd.DataFrame(columns = ["Method Name",
                                          "Method File",
                                          "Chromatogram",
@@ -157,7 +157,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
 
     ####################################################################
     # Logic for Greenhouse Gas Data
-    if module_name == "ghg" and class_name == "SCION456" and class_func == "data":
+    if module == "ghg" and m_class == "SCION456" and function == "data":
         instrument_info = pd.DataFrame(columns = [
                          "Run File",
                          "Method",
@@ -211,7 +211,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
 
     ####################################################################
     # Logic to differentiate arguments passed for ICP Data.
-    if module_name == "icp" and class_name == "agilent" and class_func == "data":
+    if module == "icp" and m_class == "agilent" and function == "data":
         agilent_df = pd.DataFrame(columns = [
             "Solution Label",
             "Aluminium (ppm)",
@@ -235,7 +235,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
                     agilent_df.to_excel(writer, index = False)
         return agilent_df
 
-    elif module_name == "icp" and class_name == "varian" and class_func == "data":
+    elif module == "icp" and m_class == "varian" and function == "data":
         varian_df = pd.DataFrame(columns = [
             "Sample Labels",    
             "Aluminium (ppm)",
@@ -262,7 +262,7 @@ def main(input_path, file_type, module_name, class_name, class_func, output_path
 
     ####################################################################
     # Logic to differentiate arguments passed for liquid TOC Data.
-    if module_name == "liquidtoc" and class_name == "FormacsTOC" and class_func == "data":
+    if module == "liquidtoc" and m_class == "FormacsTOC" and function == "data":
         toc_df = pd.DataFrame(columns = [
             "Sample ID",
             "TC Area",
@@ -293,17 +293,17 @@ if __name__ == "__main__":
     parser.add_argument("--file_type",
                         type = str,
                         required = True)
-    parser.add_argument("--module_name",
+    parser.add_argument("--module",
                         type = str,
                         required = True)
-    parser.add_argument("--class_name",
+    parser.add_argument("--m_class",
                         type = str,
                         required = True)
-    parser.add_argument("--class_func",
+    parser.add_argument("--function",
                         type = str,
                         required = True)
     parser.add_argument("--output_path",
                         type = str,
                         required = False)
     args = parser.parse_args()
-    main(args.input_path, args.file_type, args.module_name, args.class_name, args.class_func, args.output_path)
+    main(args.input_path, args.file_type, args.module, args.m_class, args.function, args.output_path)
