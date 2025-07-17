@@ -1,5 +1,5 @@
 # readInstruments
-# Developed by John A. Sorensen
+## Developed by John A. Sorensen
 
 ------------------------------------------------------------------------
 
