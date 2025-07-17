@@ -47,14 +47,14 @@ The San class is to be used with output data from an
 Skalar San++ Continious Flow Analyzer (CFA).
 The first of the two functions within this class is used for results
 from a Deionized Water Extraction (DI) and the Haney Three Acid
-Extraction (H3A.
-Both extractions analyze Nitrate/Nitrite (NO3/NO2), Phosphate (PO4),<br>
+Extraction (H3A).
+Both extractions analyze Nitrate/Nitrite (NO3/NO2), Phosphate (PO4),
 and Ammonium (NH4).
 The second function is for results of a KCL extraction where only
 NO3/NO2 & NH4 are analyzed.
 Both functions will output a Dataframe of the same format.
 
-The AA500 class is another CFA at the station an AA500.
+The AA500 class is another CFA at the station.
 The output of this class's function is a dictionary containing the
 instrument "metadata" and a Dataframe with the analytical data
 
