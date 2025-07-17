@@ -145,37 +145,32 @@ FormacsTOC.data()
 
 ## Current instruments supported by module:
 
-cfa.py:
-    Skalar San ++ Continious Flow Analyzer
-        Analytes: Nitrate/Nitrite, Phosphate, Ammonium
-    AA500 Continious Flow Analyzer
-        Analytes: Nitrate/Nitrite, Phosphate, Ammonium
+cfa.py:<br>  
+    Skalar San ++ Continious Flow Analyzer<br>  
+        Analytes: Nitrate/Nitrite, Phosphate, Ammonium<br>  
+    AA500 Continious Flow Analyzer<br>  
+        Analytes: Nitrate/Nitrite, Phosphate, Ammonium<br>  
 
-dry_combustion_cn.py:
-    Elementar Vario ELIII Dry Combustion Analyzer
-        Analytes: Carbon, Nitrogen
-    Elementar Vario Max Cube Dry Combustion Analyzer
-        Analytes: Carbon, Nitrogen
-    Thermo Flash Dry Combustion Analyzer
-        Analytes: Carbon, Nitrogen
+dry_combustion_cn.py:<br>  
+    Elementar Vario ELIII Dry Combustion Analyzer<br>  
+        Analytes: Carbon, Nitrogen<br>  
+    Elementar Vario Max Cube Dry Combustion Analyzer<br>  
+        Analytes: Carbon, Nitrogen<br>  
+    Thermo Flash Dry Combustion Analyzer<br>  
+        Analytes: Carbon, Nitrogen<br>  
 
-ghg.py:
-    SCION456 Greenhouse Gas Gas Chromatograph Analyzer
-        Analytes: Carbon Dioxide, Methane, Nitrious Oxide
+ghg.py:<br>  
+    SCION456 Greenhouse Gas Gas Chromatograph Analyzer<br>  
+        Analytes: Carbon Dioxide, Methane, Nitrious Oxide<br>  
 
-icp.py:
-    Varian Vista MPX Inductively Coupled Plasma - Optical Emission
-    Spetrometer
-        Analytes: Aluminium, Arsenic, Calcium, Iron, Potassium,
-        Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and Ytrium
-    Agilient 5110 Inductively Coupled Plasma - Optical Emission 
-    Spectrometer
-        Analytes: Aluminium, Calcium, Copper, Iron, Potassium,
-        Magnesium, Manganese, Sodium, Phosphorus, Sulfur, and Zinc
+icp.py:<br>  
+    Varian Vista MPX Inductively Coupled Plasma - Optical Emission Spetrometer<br>  
+        Analytes: Aluminium, Arsenic, Calcium, Iron, Potassium,Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and Ytrium<br>  
+    Agilient 5110 Inductively Coupled Plasma - Optical Emission Spectrometer<br>  
+        Analytes: Aluminium, Calcium, Copper, Iron, Potassium, Magnesium, Manganese, Sodium, Phosphorus, Sulfur, and Zinc<br>  
 
-liquid_toc.py:
-    Skalar Formacs Total Organic Carbon/Total Nitrogen liquid Analyzer
-        Analytes: Total Carbon, Total Organic Carbon, Inorganic Carbon,
-        Total Nitrogen
-    Elementar Vario Total Organic Carbon/Total Nitrogen Liquid Analyzer
+liquid_toc.py:<br>  
+    Skalar Formacs Total Organic Carbon/Total Nitrogen liquid Analyzer<br>  
+        Analytes: Total Carbon, Total Organic Carbon, Inorganic Carbon, Total Nitrogen<br>  
+    Elementar Vario Total Organic Carbon/Total Nitrogen Liquid Analyzer<br>  
         Analaytes: Total Organic Carbon, Total Nitrogen
