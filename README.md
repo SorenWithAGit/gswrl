@@ -1,5 +1,7 @@
 # read_instruments
+# Developed by John A. Sorensen
 
+------------------------------------------------------------------------
 A python package that will take the output file from an analytical 
 instrument at the USDA-ARS Grassland Soil Water Research Laboratory in 
 Temple, TX.
