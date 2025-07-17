@@ -132,7 +132,7 @@ The Data function will return two items a pandas dataframe containing
 the analytical data and a dictionary containing the instrument
 "metadata" of the run.
 
-The ---- class like the first is for data from an Elementar Liquid
+The VarioTOC class like the first is for data from an Elementar Liquid
 TOC/TN Analyzer.
 THe output of this class's data function will match the output of the
 FormacsTOC.data()
