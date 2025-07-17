@@ -140,18 +140,21 @@ def main(input_path, file_type, module, m_class, function, output_path) -> None:
                                           "Carbon Retention Time",
                                           "Carbon Area"])
         for file in files:
-            run = gs.drycombustion.ThermoFlash(file)
-            ins_data = pd.DataFrame(run.data()[0], index = 0).reset_index(drop = True)
-            n_data = pd.DataFrame(run.data()[1], index = 0).reset_index(drop = True)
-            c_data = pd.DataFrame(run.data()[2], index = 0).reset_index(drop = True)
-            instrument_df = pd.concat([instrument_df, ins_data])
-            nitrogen_df = pd.concat([nitrogen_df, n_data])
-            carbon_df = pd.concat([carbon_df, c_data])
+            try:
+                run = gs.drycombustion.ThermoFlash(file)
+                ins_data = run.data()[0]
+                n_data = run.data()[1]
+                c_data = run.data()[2]
+                instrument_df = pd.concat([instrument_df, ins_data]).reset_index(drop = True)
+                nitrogen_df = pd.concat([nitrogen_df, n_data]).reset_index(drop = True)
+                carbon_df = pd.concat([carbon_df, c_data]).reset_index(drop = True)
+            except:
+                 print("Unable to read file: " + file)
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
-                    instrument_df.to_excel(writer, sheet_name = "Instrument Info", index = False)
-                    nitrogen_df.to_excel(writer, sheet_name = "Nitrogen Data", index = False)
-                    carbon_df.to_excel(writer, sheet_name = "Carbon Data", index = False)
+                    instrument_df.to_excel(writer, sheet_name = "Instrument Info", index = True)
+                    nitrogen_df.to_excel(writer, sheet_name = "Nitrogen Data", index = True)
+                    carbon_df.to_excel(writer, sheet_name = "Carbon Data", index = True)
         return [instrument_df, nitrogen_df, carbon_df]
     ####################################################################
 
@@ -274,13 +277,37 @@ def main(input_path, file_type, module, m_class, function, output_path) -> None:
             "IC (ppm)",
             "TN (ppm)"])
         for file in files:
+            print(file)
             run = gs.liquidtoc.FormacsTOC(file)
-            data = run.data()
-            toc_df = pd.concat([toc_df, data[0]])
+            data = run.data()[0]
+            toc_df = pd.concat([toc_df, data])
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     toc_df.to_excel(writer, index = False)
         return toc_df
+    
+    elif module == "liquidtoc" and m_class == "VarioTOC" and function == "data":
+        analytical_data = pd.DataFrame(columns = [
+                                                "No. ",
+                                                "Hole  Pos.",
+                                                "Name  ",
+                                                "Method  ",
+                                                "Coefficients  ",
+                                                "NPOC vol. [ml]",
+                                                "NPOC  Area"
+                                                "TNb  Area",
+                                                "NPOC [mg/l]",
+                                                "TNb [mg/l]"
+                                                ])
+        for file in files:
+            run = gs.liquidtoc.VarioTOC(file)
+            data = run.data()
+            analytical_data = pd.concat([analytical_data, data])
+        analytical_data = analytical_data.reset_index(drop = True)
+        if args.output_path is not None:
+             with pd.ExcelWriter(output_path) as writer:
+                  analytical_data.to_excel(writer, index = False)
+        return analytical_data
     ####################################################################
 
 

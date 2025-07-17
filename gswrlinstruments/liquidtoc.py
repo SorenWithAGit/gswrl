@@ -61,7 +61,7 @@ class FormacsTOC():
         """
         ins = self.instrument_info
         analy_df = self.analytical_data
-        with open(self.file_name) as file:
+        with open(self.file_name, "r") as file:
             lines = file.readlines()
             file.close()
         sample_ids =[]
@@ -133,3 +133,12 @@ class FormacsTOC():
         #     "Version: " + str(version))
         return [analy_df, ins]
 
+
+class VarioTOC():
+
+    def __init__(self, file_name):
+        self.file_name = file_name
+    
+    def data(self):
+        run_df = pd.read_csv(self.file_name)
+        return run_df
