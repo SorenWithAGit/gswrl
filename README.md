@@ -1,7 +1,36 @@
 # read_instruments
 
-A python package that will take the output file from an analytical instrument at the USDA-ARS Grassland Soil Water Research Laboratory in Temple, TX.
+A python package that will take the output file from an analytical 
+instrument at the USDA-ARS Grassland Soil Water Research Laboratory in 
+Temple, TX.
+------------------------------------------------------------------------
+## Main.py is utilized by running it with parameters through the command 
+## line (i.e. powershell, terminal, etc).
 
+Using if, elif, try, and except statements based on the supplied
+parameters will open all files in a designated folder matching a 
+supplied file type and concatenate into a Pandas DataFrame(s), 
+which can be exported to Excel if desired.
+
+The parameters are
+--input_path (required): 
+    the folder path containing the exported instrument runs to be 
+    concatenated.
+--file_type (required): 
+    file type of exported runs.
+--module (required): 
+    which of the modules contained in gswrlinstruments corresponds to the
+--m_class (required):
+    the class that corresponds to the instrument the exported runs 
+    originated from.
+--function (required):
+    the function that corresponds to the exported run format
+    (some classes may only have one function)
+--output_path (optional):
+    file path the concatenated data will save to. (include file name)
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 The cfa.py module is defined by two classes, one for each of two
 instruments at the USDA Grassland Soil and Water Research Laboratory in
 Temple Texas.
@@ -20,7 +49,9 @@ Both functions will output a Dataframe of the same format.
 The AA500 class is another CFA at the station an AA500.
 The output of this class's function is a dictionary containing the
 instrument "metadata" and a Dataframe with the analytical data
+------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 The dry_combusion_cn.py module is defined by three classes, one for each
 of three Dry Combustion Analyzers at the USDA Grassland Soil and Water
 Research Laboratory in Temple Texas.
@@ -40,7 +71,9 @@ Flash for (C, N) analysis.
 The outputs of this class's data function are three dictionaries:
 Instrumental Metadara, Nitrogen Results, and Carbon Results of a single
 sample within a file.
+------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 The ghg.py module is defined by a single class to for one instrument at
 the USDA Grassland Soil and Water Research Laboratory in Temple Texas.
 
@@ -52,7 +85,9 @@ The SCION456 class's function will read a csv file containing the
 analytical and instrumental metadata from a single sample run file.
 The outputs are four dictionaries: Instrumental metadata, CO2 Results,
 CH4 Results, & N2O Results.
+------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 The icp.py module is defined by two classes, one for each of two
 instruments at the USDA Grassland Soil and Water Research Laboratory in
 Temple Texas.
@@ -70,7 +105,9 @@ The output of this class's data function is a dataframe containing the
 analytical data for the following elements: Aluminium, Arsenic, Calcium,
 Iron, Potassium, Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and
 Ytrium
+------------------------------------------------------------------------
 
+------------------------------------------------------------------------
 The liquid_toc.py module is defined by two classes, one for each of two
 instruments at the USDA Grassland Soil and Water Research Laboratory in
 Temple Texas.
@@ -85,8 +122,10 @@ The ---- class like the first is for data from an Elementar Liquid
 TOC/TN Analyzer.
 THe output of this class's data function will match the output of the
 FormacsTOC.data()
+------------------------------------------------------------------------
 
-Current instruments supported by module:
+------------------------------------------------------------------------
+## Current instruments supported by module:
 
 cfa.py:
     Skalar San ++ Continious Flow Analyzer
@@ -115,3 +154,5 @@ icp.py:
 liquid_toc.py:
     Skalar Formacs Total Organic Carbon/Total Nitrogen liquid Analyzer
         Analytes: Total Carbon, Total Organic Carbon, Inorganic Carbon, Total Nitrogen
+    Elementar Vario Total Organic Carbon/Total Nitrogen Liquid Analyzer
+        Analaytes: Total Organic Carbon, Total Nitrogen
