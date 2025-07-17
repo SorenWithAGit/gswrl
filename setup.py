@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='readInstruments_js',
-    version='0.8',
+    version='1.0',
     packages=['modules'],
     url='',
     license='CC0 1.0',
