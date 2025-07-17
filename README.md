@@ -1,4 +1,4 @@
-# read_instruments
+# readInstruments
 # Developed by John A. Sorensen
 
 ------------------------------------------------------------------------
