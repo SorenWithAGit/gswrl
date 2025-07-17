@@ -226,12 +226,15 @@ class ThermoFlash():
         c_dict["% Carbon"] =float( c_per)
         c_dict["Carbon Retention Time"] = c_ret
         c_dict["Carbon Area"] = c_area
+        ins_data = pd.DataFrame(ins_dict, index = [0])
+        n_data = pd.DataFrame(n_dict, index = [0])
+        c_data = pd.DataFrame(c_dict, index = [0])
         # for key, value in ins_dict.items():
         #     print((key, value))
         # for key, value in n_dict.items():
         #     print((key, value))
         # for key, value in c_dict.items():
         #     print((key, value))
-        return [ins_dict, n_dict, c_dict]
+        return [ins_data, n_data, c_data]
 
 
