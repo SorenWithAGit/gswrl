@@ -4,7 +4,7 @@ import glob
 import pandas as pd
 from pathlib import Path
 
-def main(input_path, file_type, module, m_class, function, output_path) -> None:
+def main(input_path, file_type, module, m_class, function, output_path):
     
     files = glob.glob(str(input_path) + "//" + "*." + str(file_type), recursive = True)
     
