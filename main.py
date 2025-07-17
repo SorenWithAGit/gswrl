@@ -277,7 +277,6 @@ def main(input_path, file_type, module, m_class, function, output_path) -> None:
             "IC (ppm)",
             "TN (ppm)"])
         for file in files:
-            print(file)
             run = gs.liquidtoc.FormacsTOC(file)
             data = run.data()[0]
             toc_df = pd.concat([toc_df, data])
