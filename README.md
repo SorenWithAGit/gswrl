@@ -2,10 +2,13 @@
 # Developed by John A. Sorensen
 
 ------------------------------------------------------------------------
+
 A python package that will take the output file from an analytical 
 instrument at the USDA-ARS Grassland Soil Water Research Laboratory in 
 Temple, TX.
+
 ------------------------------------------------------------------------
+
 ## Main.py is utilized by running it with parameters through the command 
 ## line (i.e. powershell, terminal, etc).
 
@@ -30,6 +33,7 @@ The parameters are
     (some classes may only have one function)
 --output_path (optional):
     file path the concatenated data will save to. (include file name)
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -51,9 +55,11 @@ Both functions will output a Dataframe of the same format.
 The AA500 class is another CFA at the station an AA500.
 The output of this class's function is a dictionary containing the
 instrument "metadata" and a Dataframe with the analytical data
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+
 The dry_combusion_cn.py module is defined by three classes, one for each
 of three Dry Combustion Analyzers at the USDA Grassland Soil and Water
 Research Laboratory in Temple Texas.
@@ -73,9 +79,11 @@ Flash for (C, N) analysis.
 The outputs of this class's data function are three dictionaries:
 Instrumental Metadara, Nitrogen Results, and Carbon Results of a single
 sample within a file.
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+
 The ghg.py module is defined by a single class to for one instrument at
 the USDA Grassland Soil and Water Research Laboratory in Temple Texas.
 
@@ -87,9 +95,11 @@ The SCION456 class's function will read a csv file containing the
 analytical and instrumental metadata from a single sample run file.
 The outputs are four dictionaries: Instrumental metadata, CO2 Results,
 CH4 Results, & N2O Results.
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+
 The icp.py module is defined by two classes, one for each of two
 instruments at the USDA Grassland Soil and Water Research Laboratory in
 Temple Texas.
@@ -107,9 +117,11 @@ The output of this class's data function is a dataframe containing the
 analytical data for the following elements: Aluminium, Arsenic, Calcium,
 Iron, Potassium, Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and
 Ytrium
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+
 The liquid_toc.py module is defined by two classes, one for each of two
 instruments at the USDA Grassland Soil and Water Research Laboratory in
 Temple Texas.
@@ -124,9 +136,11 @@ The ---- class like the first is for data from an Elementar Liquid
 TOC/TN Analyzer.
 THe output of this class's data function will match the output of the
 FormacsTOC.data()
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+
 ## Current instruments supported by module:
 
 cfa.py:
