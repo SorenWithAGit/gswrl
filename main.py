@@ -21,6 +21,7 @@ def main(input_path, file_type, module, m_class, function, output_path):
             run = gs.cfa.San(file)
             data = run.DI_H3A_data()
             DI_H3A_df = pd.concat([DI_H3A_df, data])
+        DI_H3A_df = DI_H3A_df.iloc[:, [0,1,3,2]]
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     DI_H3A_df.to_excel(writer, index = False)
@@ -37,6 +38,7 @@ def main(input_path, file_type, module, m_class, function, output_path):
             run = gs.cfa.San(file)
             data = run.KCL_data()
             KCl_df  = pd.concat([KCl_df, data])
+        KCl_df = KCl_df.iloc[:, [0,1,3,2]]
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     KCl_df.to_excel(writer, index = False)
