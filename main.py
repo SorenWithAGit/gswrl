@@ -21,7 +21,11 @@ def main(input_path, file_type, module, m_class, function, output_path):
             run = gs.cfa.San(file)
             data = run.DI_H3A_data()
             DI_H3A_df = pd.concat([DI_H3A_df, data])
-        DI_H3A_df = DI_H3A_df.iloc[:, [0,1,3,2]]
+        DI_H3A_df = DI_H3A_df.reindex(columns = [
+             "SampleIdentity", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     DI_H3A_df.to_excel(writer, index = False)
@@ -32,13 +36,17 @@ def main(input_path, file_type, module, m_class, function, output_path):
             "SampleIdentity",
             "Nitrate Nitrite- Results[mg N/liter]",
             "Phosphate- Results[mg P/liter]",
-            "Ammonia- Results[mg N/liter]" ])
+            "Ammonia- Results[mg N/liter]"])
         
         for file in files:
             run = gs.cfa.San(file)
             data = run.KCL_data()
             KCl_df  = pd.concat([KCl_df, data])
-        KCl_df = KCl_df.iloc[:, [0,1,3,2]]
+            DI_H3A_df = DI_H3A_df.reindex(columns = [
+             "SampleIdentity", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     KCl_df.to_excel(writer, index = False)
@@ -223,9 +231,9 @@ def main(input_path, file_type, module, m_class, function, output_path):
             "Calcium (ppm)",
             "Copper (ppm)",
             "Iron (ppm)",
-            "Potassium (ppm)"
-            "Magnesium (ppm)"
-            "Manganese (ppm)"
+            "Potassium (ppm)",
+            "Magnesium (ppm)",
+            "Manganese (ppm)",
             "Sodium (ppm)", 
             "Phosphorus (ppm)",
             "Sulfur (ppm)",
@@ -247,9 +255,9 @@ def main(input_path, file_type, module, m_class, function, output_path):
             "Arsenic (ppm)",
             "Calcium (ppm)",
             "Iron (ppm)",
-            "Potassium (ppm)"
-            "Magnesium (ppm)"
-            "Manganese (ppm)"
+            "Potassium (ppm)",
+            "Magnesium (ppm)",
+            "Manganese (ppm)",
             "Phosphorus (ppm)",
             "Sulfur (ppm)",
             "Zinc (ppm)",
