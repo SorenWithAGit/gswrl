@@ -1,5 +1,7 @@
 import pandas as pd
 
+
+# attributes of each field that remain constant
 field_constants = {
                     "field" : ["SW12", "SW17", "W1", 
                               "W6", "W10", "W12",
@@ -27,6 +29,16 @@ field_constants = {
                                                  3915, 3496, 2132,
                                                  1056]
                      }
+
+# standard unit conversions
+mm_per_l = 1000
+mg_per_kg = 1000
+l_per_ft3 = 23.3168
+in_per_ft = 12
+mm_per_ft = 25.4
+ft_per_acre = 43560
+acre_per_hectare = 2.47105
+
 
 field_df = pd.DataFrame(field_constants)
 field_df["sampling interval (mgal)"] = field_df["sampling interval (ft3)"] * (1/133680.556)
