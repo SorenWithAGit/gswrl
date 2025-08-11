@@ -6,7 +6,8 @@ import glob
 sampler_data = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
                                       "Start Volume", "End Volume", "Total Volume"])
 
-sampler_files = glob.glob(r"I:\programming\python\gswrl\iscolitter\05-08-2019" + "\\" + "*.txt", recursive = True)
+path = input("Path to raw Sampler txt files: ")
+sampler_files = glob.glob(str(path) + "//" + "*" + ".txt", recursive = True)
 
 for file in sampler_files:
     sampler_df = rs.read_txt(file)
