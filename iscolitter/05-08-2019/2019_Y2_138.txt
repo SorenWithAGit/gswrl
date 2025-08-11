@@ -1,0 +1,278 @@
+SAMPLER ID# 1332509203  11:13 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** PROGRAM SETTINGS ***********
+     ----------
+   PROGRAM NAME:    
+    "RUNOFF    "    
+ SITE DESCRIPTION:  
+    "Y2A       "    
+     ----------
+   UNITS SELECTED:  
+     LENGTH: ft     
+                    
+  TEMPERATURE:  F   
+     ----------
+   UNITS SELECTED:  
+   FLOW RATE: cfs   
+ FLOW VOLUME: Mgal  
+                    
+     ----------
+   BUBBLER MODULE:  
+    DATA POINTS     
+    "DATA SET 1"    
+ 28 POINTS ENTERED  
+     ----------
+                    
+     10 MINUTE      
+   DATA INTERVAL    
+                    
+     ----------
+   1, 20.0 lit BTLS 
+ 30 ft SUCTION LINE 
+ AUTO SUCTION HEAD  
+1 RINSES, 0 RETRIES 
+     ----------
+                    
+  ONE-PART PROGRAM  
+                    
+                    
+     ----------
+      PACING:       
+    FLOW, EVERY     
+     0.186 Mgal     
+NO SAMPLE AT START  
+     ----------
+     COMPOSITE:     
+                    
+  RUN CONTINUOUSLY  
+                    
+     ----------
+      VOLUME:       
+                    
+   200 ml SAMPLES   
+                    
+     ----------
+      ENABLE:       
+                    
+  LEVEL >0.570 ft   
+                    
+     ----------
+      ENABLE:       
+   ONCE ENABLED,    
+    STAY ENABLED    
+NO SAMPLE AT ENABLE 
+     ----------
+      ENABLE:       
+  0 MINUTE DELAY TO 
+ START OF SAMPLING  
+                    
+     ----------
+      ENABLE:       
+ 0 PAUSE & RESUMES  
+                    
+                    
+     ----------
+                    
+ NO DELAY TO START  
+                    
+                    
+     ----------
+     ----------
+     ----------
+  LIQUID DETECT ON  
+                    
+ QUICK VIEW/CHANGE  
+  3 C TARGET TEMP   
+     ----------
+                    
+ TAKE MEASUREMENTS  
+  EVERY  1 MINUTES  
+                    
+     ----------
+  DUAL SAMPLER OFF  
+ BTL FULL DETECT ON 
+  TIMED BACKLIGHT   
+                    
+     ----------
+                    
+  EVENT MARK SENT   
+ DURING PUMP CYCLE  
+                    
+     ----------
+  PUMP COUNTS FOR   
+ EACH PURGE CYCLE:  
+   200 PRE-SAMPLE   
+  AUTO POST-SAMPLE  
+     ----------
+                    
+    NO PERIODIC     
+   SERIAL OUTPUT    
+                    
+     ----------
+    INTERROGATOR    
+     CONNECTOR      
+  POWER ALWAYS ON   
+                    
+     ----------
+     ----------
+     ----------
+                    
+   NO RAIN GAUGE    
+                    
+                    
+     ----------
+  NO SDI-12 SONDE   
+                    
+AUTO SDI-12 SCAN OFF
+                    
+     ----------
+ I/O1= NONE         
+ I/O2= NONE         
+ I/O3= NONE         
+                    
+     ----------
+                    
+  0 ANALOG OUTPUTS  
+                    
+                    
+     ----------
+                    
+ NO EXTERNAL MODEM  
+                    
+                    
+     ----------
+                    
+      NO ALARM      
+   CONDITIONS SET   
+                    
+     ----------
+     ----------
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332509203  11:14 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** SAMPLING RESULTS ***********
+   SITE: Y2A       
+PROGRAM: RUNOFF    
+Program Started at 07:56 MO 13-MAY-19
+Nominal Sample Volume =  200 ml
+                                   COUNT
+                                      TO
+SAMPLE  BOTTLE TIME  SOURCE ERROR LIQUID
+------- ------ ----      -- --    ------
+              07:56  PGM DISABLED
+------------- SA 18-MAY-19 -------------
+              15:11  PGM ENABLED
+    1     1   15:35      F           670
+    2     1   15:50      F           670
+    3     1   16:22      F           682
+    4     1   16:55      F           676
+    5     1   17:30      F           682
+    6     1   17:59      F           666
+    7     1   18:14      F           676
+    8     1   18:31      F           670
+    9     1   18:53      F           682
+   10     1   19:20      F           676
+   11     1   19:58      F           676
+   12     1   21:03      F           676
+------------- SU 19-MAY-19 -------------
+   13     1   00:17      F           670
+              11:11  MANUAL PAUSE
+              11:11  PGM STOPPED 19-MAY
+
+ 
+   SOURCE F  ==> FLOW                
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332509203  11:14 19-MAY-19
+  Hardware:     B0  Software: 2.34
+ BUBBLER MODULE: 1332853548
+  Hardware:     A0  Software: 1.07
+*********** COMBINED RESULTS ***********
+   SITE: Y2A       
+PROGRAM: RUNOFF    
+Program Started at 07:56 MO 13-MAY-19
+Nominal Sample Volume =  200 ml
+                             FLOW         TOTAL
+                     LEVEL   RATE          FLOW
+SAMPLE  BOTTLE TIME     ft    cfs          Mgal
+------- ------ ----  -----  ----- -------------
+-------------------- SA 18-MAY-19 ------
+
+    1     1   15:35  1.172  25.93    0000000.19
+    2     1   15:50  1.162  25.26    0000000.38
+    3     1   16:22  0.906  11.62    0000000.57
+    4     1   16:55  0.929  12.57    0000000.75
+    5     1   17:30  0.910  11.75    0000000.94
+    6     1   17:59  1.231  30.18    0000001.12
+    7     1   18:14  1.172  25.93    0000001.31
+    8     1   18:31  1.116  22.26    0000001.50
+    9     1   18:53  1.024  17.04    0000001.68
+   10     1   19:20  0.946  13.28    0000001.87
+   11     1   19:58  0.841  9.124    0000002.05
+   12     1   21:03  0.664  4.429    0000002.24
+-------------------- SU 19-MAY-19 ------
+   13     1   00:17  0.365  0.977    0000002.43
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332509203  11:14 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** COMBINED RESULTS ***********
+   SITE: Y2A       
+PROGRAM: RUNOFF    
+Program Started at 07:56 MO 13-MAY-19
+Nominal Sample Volume =  200 ml
+                        FR-TEMP
+SAMPLE  BOTTLE TIME           F
+------- ------ ----        ----
+-------------------- SA 18-MAY-19 ------
+    1     1   15:35        79.7
+    2     1   15:50        69.8
+    3     1   16:22        34.0
+    4     1   16:55        34.5
+    5     1   17:30        32.7
+    6     1   17:59        34.0
+    7     1   18:14        34.2
+    8     1   18:31        34.5
+    9     1   18:53        33.3
+   10     1   19:20        34.0
+   11     1   19:58        34.3
+   12     1   21:03        33.1
+-------------------- SU 19-MAY-19 ------
+   13     1   00:17        33.6
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332509203  11:14 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** COMBINED RESULTS ***********
+   SITE: Y2A       
+PROGRAM: RUNOFF    
+Program Started at 07:56 MO 13-MAY-19
+Nominal Sample Volume =  200 ml
+SAMPLE  BOTTLE TIME 
+------- ------ ----------- ------ ----
+                    NO RAIN GAUGE
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332509203  11:14 19-MAY-19
+  Hardware:     B0  Software: 2.34
+SDI-12 DATA
+*********** COMBINED RESULTS ***********
+   SITE: Y2A       
+PROGRAM: RUNOFF    
+Program Started at 07:56 MO 13-MAY-19
+Nominal Sample Volume =  200 ml
+ 
+ 
+                    NO SDI-12 SONDE
+----------------------------------------

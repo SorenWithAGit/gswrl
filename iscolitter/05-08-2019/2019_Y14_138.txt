@@ -1,0 +1,247 @@
+SAMPLER ID# 1332859318  13:42 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** PROGRAM SETTINGS ***********
+     ----------
+   PROGRAM NAME:    
+    "RUNOFF 1  "    
+ SITE DESCRIPTION:  
+    "Y14A      "    
+     ----------
+   UNITS SELECTED:  
+     LENGTH: ft     
+                    
+  TEMPERATURE:  F   
+     ----------
+   UNITS SELECTED:  
+   FLOW RATE: cfs   
+  FLOW VOLUME: cf   
+                    
+     ----------
+   BUBBLER MODULE:  
+    DATA POINTS     
+    "DATA SET 1"    
+ 29 POINTS ENTERED  
+     ----------
+                    
+      5 MINUTE      
+   DATA INTERVAL    
+                    
+     ----------
+   1, 20.0 lit BTLS 
+ 32 ft SUCTION LINE 
+ AUTO SUCTION HEAD  
+1 RINSES, 0 RETRIES 
+     ----------
+                    
+  ONE-PART PROGRAM  
+                    
+                    
+     ----------
+      PACING:       
+    FLOW, EVERY     
+      1056  cf      
+NO SAMPLE AT START  
+     ----------
+     COMPOSITE:     
+                    
+  RUN CONTINUOUSLY  
+                    
+     ----------
+      VOLUME:       
+                    
+   200 ml SAMPLES   
+                    
+     ----------
+      ENABLE:       
+                    
+  LEVEL >0.180 ft   
+                    
+     ----------
+      ENABLE:       
+   ONCE ENABLED,    
+    STAY ENABLED    
+NO SAMPLE AT ENABLE 
+     ----------
+      ENABLE:       
+  0 MINUTE DELAY TO 
+ START OF SAMPLING  
+                    
+     ----------
+      ENABLE:       
+ 0 PAUSE & RESUMES  
+                    
+                    
+     ----------
+                    
+ NO DELAY TO START  
+                    
+                    
+     ----------
+     ----------
+     ----------
+  LIQUID DETECT ON  
+                    
+ QUICK VIEW/CHANGE  
+  3 C TARGET TEMP   
+     ----------
+                    
+ TAKE MEASUREMENTS  
+  EVERY  1 MINUTES  
+                    
+     ----------
+  DUAL SAMPLER OFF  
+BTL FULL DETECT OFF 
+  TIMED BACKLIGHT   
+                    
+     ----------
+                    
+  EVENT MARK SENT   
+ DURING PUMP CYCLE  
+                    
+     ----------
+  PUMP COUNTS FOR   
+ EACH PURGE CYCLE:  
+   200 PRE-SAMPLE   
+  AUTO POST-SAMPLE  
+     ----------
+                    
+    NO PERIODIC     
+   SERIAL OUTPUT    
+                    
+     ----------
+    INTERROGATOR    
+     CONNECTOR      
+  POWER ALWAYS ON   
+                    
+     ----------
+     ----------
+     ----------
+                    
+   NO RAIN GAUGE    
+                    
+                    
+     ----------
+  NO SDI-12 SONDE   
+                    
+AUTO SDI-12 SCAN OFF
+                    
+     ----------
+ I/O1= NONE         
+ I/O2= NONE         
+ I/O3= NONE         
+                    
+     ----------
+                    
+  0 ANALOG OUTPUTS  
+                    
+                    
+     ----------
+                    
+ NO EXTERNAL MODEM  
+                    
+                    
+     ----------
+                    
+      NO ALARM      
+   CONDITIONS SET   
+                    
+     ----------
+     ----------
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332859318  13:42 19-MAY-19
+  Hardware:     B0  Software: 2.34
+*********** SAMPLING RESULTS ***********
+   SITE: Y14A      
+PROGRAM: RUNOFF 1  
+Program Started at 08:37 TH  9-MAY-19
+Nominal Sample Volume =  200 ml
+                                   COUNT
+                                      TO
+SAMPLE  BOTTLE TIME  SOURCE ERROR LIQUID
+------- ------ ----      -- --    ------
+              08:37  PGM DISABLED
+------------- SA 18-MAY-19 -------------
+              15:09  PGM ENABLED
+    1     1   15:38      F           752
+    2     1   15:53      F           754
+    3     1   16:06      F           756
+    4     1   16:18      F           761
+    5     1   16:26      F           764
+    6     1   16:34      F           761
+    7     1   16:39      F           765
+    8     1   16:44      F           762
+    9     1   16:48      F           768
+   10     1   16:52      F           771
+   11     1   16:56      F           773
+   12     1   17:00      F           778
+   13     1   17:04      F           775
+   14     1   17:08      F           774
+   15     1   17:12      F           780
+   16     1   17:17      F           774
+   17     1   17:21      F           780
+   18     1   17:27      F           780
+   19     1   17:33      F           783
+   20     1   17:40      F           782
+   21     1   17:49      F           773
+   22     1   17:59      F           773
+   23     1   18:13      F           768
+   24     1   18:31      F           768
+   25     1   18:59      F           767
+   26     1   19:49      F           759
+   27     1   21:53      F           749
+------------- SU 19-MAY-19 -------------
+              13:40  MANUAL PAUSE
+              13:40  PGM STOPPED 19-MAY
+
+ 
+   SOURCE F  ==> FLOW                
+----------------------------------------
+ 
+ 
+ 
+SAMPLER ID# 1332859318  13:42 19-MAY-19
+  Hardware:     B0  Software: 2.34
+ BUBBLER MODULE: 3293373881
+  Hardware:     A1  Software: 1.07
+*********** COMBINED RESULTS ***********
+   SITE: Y14A      
+PROGRAM: RUNOFF 1  
+Program Started at 08:37 TH  9-MAY-19
+Nominal Sample Volume =  200 ml
+                             FLOW         TOTAL
+                     LEVEL   RATE          FLOW
+SAMPLE  BOTTLE TIME     ft    cfs            cf
+------- ------ ----  -----  ----- -------------
+-------------------- SA 18-MAY-19 ------
+    1     1   15:38  0.367  1.048   00000001200
+    2     1   15:53  0.397  1.279   00000002300
+
+    3     1   16:06  0.417  1.445   00000003300
+    4     1   16:18  0.456  1.819   00000004400
+    5     1   16:26  0.495  2.250   00000005500
+    6     1   16:34  0.535  2.728   00000006500
+    7     1   16:39  0.597  3.627   00000007600
+    8     1   16:44  0.617  3.950   00000008600
+    9     1   16:48  0.633  4.231   00000009700
+   10     1   16:52  0.643  4.407   00000010700
+   11     1   16:56  0.653  4.589   00000011800
+   12     1   17:00  0.656  4.649   00000012900
+   13     1   17:04  0.646  4.468   00000013900
+   14     1   17:08  0.630  4.172   00000015000
+   15     1   17:12  0.623  4.060   00000016000
+   16     1   17:17  0.604  3.733   00000017100
+   17     1   17:21  0.587  3.474   00000018100
+   18     1   17:27  0.561  3.085   00000019200
+   19     1   17:33  0.518  2.521   00000020200
+   20     1   17:40  0.492  2.212   00000021300
+   21     1   17:49  0.463  1.886   00000022400
+   22     1   17:59  0.420  1.474   00000023400
+   23     1   18:13  0.384  1.175   00000024500
+   24     1   18:31  0.328  0.785   00000025500
+   25     1   18:59  0.269  0.474   00000026600
+   26     1   19:49  0.210  0.251   00000027600
+   27     1   21:53  0.125  0.066   00000028700
+----------------------------------------
