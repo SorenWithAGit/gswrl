@@ -28,14 +28,14 @@ def read_txt(txt):
 
         end_vol_line = lines[end_line - 2]
         if lines[begin_line - 3] == "\n":
-            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
+            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
         elif lines[begin_line - 5] == "\n":
-            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
+            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
         else:
             try:
-                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
+                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
             except:
-                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
+                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
         date = lines[begin_line][25:34]
         units = lines[begin_line - 2].split(" ")[-1].strip("\n")
         sample_num = end_vol_line.split(" ")[3].strip("\n")
@@ -49,6 +49,8 @@ def read_txt(txt):
     sampler_df["Start Volume"] = [start_volume]
     sampler_df["End Volume"] = [end_volume]
     sampler_df["Total Volume"] = [total_volume]
+    sampler_df["Date"] = pd.to_datetime(sampler_df["Date"])
+    sampler_df["Date"] = sampler_df["Date"].dt.strftime("%m-%d-%Y")
         # print("SITE: " + site)
         # print("DATE: " + date)
         # print("UNITS: " + units)
