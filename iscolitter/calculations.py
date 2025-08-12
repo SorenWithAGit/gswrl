@@ -23,6 +23,11 @@ def constants():
                                                                 1.32, 1.32, 1.32,
                                                                 1.32, 1.32, 1.32,
                                                                 1.32],
+                        "measurement unit" : ["cf", "cf", "Mgal",
+                                              "cf", "cf", "cf",
+                                              "cf", "Mgal", "cf",
+                                              "cf", "cf", "cf",
+                                              "cf"],
                         "sampling interval (ft3)" : [565.9, 565.9, 32890.2,
                                                     8000, 3735, 1864,
                                                     2132, 24868.2, 3076,
@@ -38,7 +43,12 @@ def constants():
     mm_per_ft = 25.4
     ft_per_acre = 43560
     acre_per_hectare = 2.47105
+    # Mgal = Million Gallons
+    ft3_per_Mgall = 133680.556
 
 
     field_df = pd.DataFrame(field_constants)
-    field_df["sampling interval (mgal)"] = field_df["sampling interval (ft3)"] * (1/133680.556)
+    field_df["sampling interval (Mgal)"] = field_df["sampling interval (ft3)"] * (1/ft3_per_Mgall)
+    return field_df
+df = constants()
+print(df)
