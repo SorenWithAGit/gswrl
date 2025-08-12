@@ -28,14 +28,14 @@ def read_txt(txt):
 
         end_vol_line = lines[end_line - 2]
         if lines[begin_line - 3] == "\n":
-            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n")
+            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
         elif lines[begin_line - 5] == "\n":
-            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n")
+            site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
         else:
             try:
-                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n")
+                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
             except:
-                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n")
+                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("A", "").replace("-", "").replace("1", "").replace(" ", "")
         date = lines[begin_line][25:34]
         units = lines[begin_line - 2].split(" ")[-1].strip("\n")
         sample_num = end_vol_line.split(" ")[3].strip("\n")
