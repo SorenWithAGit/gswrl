@@ -1,8 +1,10 @@
 import pandas as pd
 
+pd.options.mode.copy_on_write = True
+
 def read_txt(txt):
     sampler_df = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
-                                      "Start Volume", "End Volume", "Total Volume"])
+                                      "Start Volume", "End Volume"])
     with open(txt) as file:
         lines = file.readlines()
 
@@ -41,14 +43,12 @@ def read_txt(txt):
         sample_num = end_vol_line.split(" ")[3].strip("\n")
         start_volume = float(lines[start_vol_line].split(" ")[-1].strip("\n"))
         end_volume = float(end_vol_line.split(" ")[-1].strip("\n"))
-        total_volume = end_volume - start_volume
     sampler_df["Site"] = [site]
     sampler_df["Date"] = [date]
     sampler_df["Units"] = [units]
     sampler_df["# of Samples"] = [sample_num]
     sampler_df["Start Volume"] = [start_volume]
     sampler_df["End Volume"] = [end_volume]
-    sampler_df["Total Volume"] = [total_volume]
     sampler_df["Date"] = pd.to_datetime(sampler_df["Date"])
     sampler_df["Date"] = sampler_df["Date"].dt.strftime("%m-%d-%Y")
         # print("SITE: " + site)
