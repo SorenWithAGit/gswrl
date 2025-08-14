@@ -38,7 +38,8 @@ def read_txt(txt):
                 site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
             except:
                 site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-        date = lines[begin_line][25:34]
+                
+        date = lines[begin_line].split(" ")[2]
         units = lines[begin_line - 2].split(" ")[-1].strip("\n")
         sample_num = end_vol_line.split(" ")[3].strip("\n")
         start_volume = float(lines[start_vol_line].split(" ")[-1].strip("\n"))
