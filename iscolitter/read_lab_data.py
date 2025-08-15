@@ -13,13 +13,6 @@ def storm_data(file_path, sampler_data):
         rep_lst.append(rep)
     nutrient_data["Replicate"] = rep_lst
 
-    nutrient_acid_data = lab_data[lab_data["Sample Type"] == "NutAcid"]
-    na_rep_lst = []
-    for index in nutrient_acid_data.index:
-        na_rep = nutrient_acid_data["Sample Name"][index].split(" ")[1]
-        na_rep_lst.append(na_rep)
-    nutrient_acid_data["Replicate"] = na_rep_lst
-
     no3_lst_1 = []
     nh3_lst_1 = []
     po4_lst_1 = []
@@ -37,6 +30,7 @@ def storm_data(file_path, sampler_data):
     no3_lst_2 = []
     nh3_lst_2 = []
     po4_lst_2 = []
+
     try:
         for i in sampler_data.index:
             for iter in nutrient_data.index:
@@ -67,7 +61,20 @@ def storm_data(file_path, sampler_data):
         storm_df["NO3-N [mg N/liter] avg"] = "NaN"
         storm_df["NH3-N [mg N/liter] avg"] = "NaN"
         storm_df["PO4-P [mg P/liter] avg"] = "NaN"
+    return storm_df
 
+
+def acid_data(file_path, sampler_data):
+    lab_data = pd.read_excel(file_path)
+    lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
+
+    nutrient_acid_data = lab_data[lab_data["Sample Type"] == "NutAcid"]
+    na_rep_lst = []
+    for index in nutrient_acid_data.index:
+        na_rep = nutrient_acid_data["Sample Name"][index].split(" ")[1]
+        na_rep_lst.append(na_rep)
+    nutrient_acid_data["Replicate"] = na_rep_lst
+    
     acid_no3_lst_1 = []
     acid_nh3_lst_1 = []
     acid_po4_lst_1 = []
@@ -116,4 +123,4 @@ def storm_data(file_path, sampler_data):
         acid_storm_df["NH3-N [mg N/liter] avg"] = "NaN"
         acid_storm_df["PO4-P [mg P/liter] avg"] = "NaN"
 
-    return storm_df, acid_storm_df
+    return acid_storm_df
