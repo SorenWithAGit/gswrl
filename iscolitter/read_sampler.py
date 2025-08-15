@@ -29,7 +29,9 @@ def read_txt(txt):
                     break
 
             end_vol_line = lines[end_line - 2]
-            if lines[begin_line - 3] == "\n":
+            if lines[begin_line - 4] == "\n":
+                site = lines[begin_line - 10].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+            elif lines[begin_line - 3] == "\n":
                 site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
             elif lines[begin_line - 5] == "\n":
                 site = lines[begin_line - 9].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
