@@ -9,10 +9,11 @@ pd.options.mode.copy_on_write = True
 sampler_data = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
                                       "Start Volume", "End Volume"])
 
-sampler_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2018\W1"
-sampler_files = glob.glob(str(sampler_path) + "//" + "*" + ".txt", recursive = True)
+sampler_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2018\W12"
+sampler_files = glob.glob(str(sampler_path) + "//" + "*.txt", recursive = True)
 
 for file in sampler_files:
+    print("File Path: " + file)
     sampler_df = rs.read_txt(file)
     sampler_data = pd.concat([sampler_data, sampler_df]).reset_index(drop = True)
 print(sampler_data)
@@ -51,8 +52,6 @@ storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "E
                             "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
                             "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2018\2018_isco_calculations.xlsx") as writer:
-    storm_df.to_excel(writer, sheet_name = "W1", index = False)
 
 acid_df = rld.acid_data(lab_data_path, sampler_data)
 
@@ -79,17 +78,15 @@ acid_df["PO4-P [kg/ha] avg"] = acid_kg_ha[8]
 print(acid_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
 
-acid_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+acid_df = acid_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
                      "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
                         "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
                             "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
                             "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
                             "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2018\2018_isco_calculations.xlsx") as writer:
-#     storm_df.to_excel(writer, sheet_name = "SW12", index = False)
-#     row_start_acid_storm = len(storm_df) + 3
-#     acid_df.to_excel(writer, sheet_name = "SW12", startrow = row_start_acid_storm, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2018\2018_isco_no_acid_calculations.xlsx") as writer:
+    storm_df.to_excel(writer, sheet_name = "W12", index = False)
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2018\2018_isco_acid_calculations.xlsx") as writer:
-    acid_df.to_excel(writer, sheet_name = "W1", index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2018\2018_isco_w_acid_calculations.xlsx") as writer:
+    acid_df.to_excel(writer, sheet_name = "W12", index = False)
