@@ -77,7 +77,14 @@ def storm_data(file_path, sampler_data):
 def acid_data(file_path, sampler_data):
     lab_data = pd.read_excel(file_path)
     lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
-
+    for entry in lab_data.index:
+        if lab_data["Nitrate Nitrite- Results[mg N/liter]"][entry] < 0:
+            lab_data.at[entry, "Nitrate Nitrite- Results[mg N/liter]"] = 0.05
+        if lab_data["Ammonia- Results[mg N/liter]"][entry] < 0:
+             lab_data.at[entry, "Ammonia- Results[mg N/liter]"] = 0.05
+        if lab_data["Phosphate- Results[mg P/liter]"][entry] < 0:
+             lab_data.at[entry, "Phosphate- Results[mg P/liter]"] = 0.05
+             
     nutrient_acid_data = lab_data[lab_data["Sample Type"] == "NutAcid"]
     na_rep_lst = []
     for index in nutrient_acid_data.index:

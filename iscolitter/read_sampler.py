@@ -15,6 +15,7 @@ def read_txt(txt):
                 begin_line = line_count + 1
                 # print("begin line: " + str(begin_line))
                 break
+        # print(str(file) + "Begin Line: " + str(begin_line))
 
         # iterate through file lines until end of table is found
         for line_count, line in enumerate(lines[begin_line:]):
@@ -50,10 +51,20 @@ def read_txt(txt):
         else: 
             date = lines[begin_line].split(" ")[2]
         units = lines[begin_line - 2].split(" ")[-1].strip("\n")
-        if end_vol_line.split(" ")[3].strip("\n") == "":
+        # if end_vol_line.split(" ")[4] == " ":
+        #     sample_num = end_vol_line.split(" ")[2].strip("\n")
+        # elif end_vol_line.split(" ")[3] != " ":
+        #     sample_num = end_vol_line.split(" ")[3].strip("\n")
+        # elif end_vol_line.split(" ")[4] != " ":
+        #     sample_num = end_vol_line.split(" ")[4].strip("\n")
+        
+        if end_vol_line.split(" ")[1].strip("\n") == "" and end_vol_line.split(" ")[2] != "":
+            sample_num = end_vol_line.split(" ")[2].strip("\n")
+        elif end_vol_line.split(" ")[3].strip("\n") == "":
             sample_num = end_vol_line.split(" ")[4].strip("\n")
-        else:
+        elif end_vol_line.split(" ")[2].strip("\n") == "" and end_vol_line.split(" ")[3] != "" and end_vol_line.split(" ")[4] == "":
             sample_num = end_vol_line.split(" ")[3].strip("\n")
+
         start_volume = float(lines[start_vol_line].split(" ")[-1].strip("\n"))
         end_volume = float(end_vol_line.split(" ")[-1].strip("\n"))
         sampler_df["Site"] = [site]
