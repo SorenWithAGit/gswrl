@@ -1,3 +1,2 @@
-tests/
-iscolitter/read_sampler.py/
-iscolitter/read_lab_data.py/
+iscolitter/read_sampler.py
+iscolitter/read_lab_data.py
