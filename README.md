@@ -1,4 +1,4 @@
-# readInstruments
+# gswrl
 ## Developed by John A. Sorensen
 
 ------------------------------------------------------------------------
@@ -164,13 +164,39 @@ ghg.py:<br>
         Analytes: Carbon Dioxide, Methane, Nitrious Oxide<br>  
 
 icp.py:<br>  
-    Varian Vista MPX Inductively Coupled Plasma - Optical Emission Spetrometer<br>  
-        Analytes: Aluminium, Arsenic, Calcium, Iron, Potassium,Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and Ytrium<br>  
-    Agilient 5110 Inductively Coupled Plasma - Optical Emission Spectrometer<br>  
-        Analytes: Aluminium, Calcium, Copper, Iron, Potassium, Magnesium, Manganese, Sodium, Phosphorus, Sulfur, and Zinc<br>  
+    Varian Vista MPX Inductively Coupled Plasma <br>
+    Optical Emission Spetrometer<br>  
+        Analytes: Aluminium, Arsenic, Calcium, Iron, Potassium, <br>
+        Magnesium, Manganese, Phosphorus, Sulfur, Zinc, and Ytrium<br>  
+    Agilient 5110 Inductively Coupled Plasma <br>
+    Optical Emission Spectrometer<br>  
+        Analytes: Aluminium, Calcium, Copper, Iron, Potassium, <br>
+        Magnesium, Manganese, Sodium, Phosphorus, Sulfur, and Zinc<br>  
 
 liquid_toc.py:<br>  
     Skalar Formacs Total Organic Carbon/Total Nitrogen liquid Analyzer<br>  
-        Analytes: Total Carbon, Total Organic Carbon, Inorganic Carbon, Total Nitrogen<br>  
+        Analytes: Total Carbon, Total Organic Carbon, Inorganic Carbon,<br>
+        Total Nitrogen<br>  
     Elementar Vario Total Organic Carbon/Total Nitrogen Liquid Analyzer<br>  
         Analaytes: Total Organic Carbon, Total Nitrogen
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## iscolitter
+
+iscolitter is set of modules that takes data from cfa <br>
+(currently Skalar San++) Total P from icp (currently Agilent 5110)<br>
+and volumes from the samplers in the field. 
+
+isco.py incorporates glob to identify the files to be read and utilize<br>
+the classes and functions within read_data.py and calculations with<br>
+concatinated dataframes in a universal format.
+
+read_data.py allows data to be read from the samplers and the lab data<br>
+to be read into a pandas dataframe.
+
+calculations.py contains the unit conversion calculation functions as<br>
+well as the load calculations of Nitrate (NO3), Ammonia (NH3), and<br>
+Phosphate (PO4)
