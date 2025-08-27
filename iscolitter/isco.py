@@ -1,4 +1,5 @@
 import pandas as pd
+import read_data as rd
 import read_sampler as rs
 import calculations as cal
 import read_lab_data as rld
@@ -14,13 +15,13 @@ sampler_files = glob.glob(str(sampler_path) + "//" + "*.txt", recursive = True)
 
 for file in sampler_files:
     print("File Path: " + file)
-    sampler_df = rs.read_txt(file)
+    sampler_df = rd.sampler_data.read_txt(file)
     sampler_data = pd.concat([sampler_data, sampler_df]).reset_index(drop = True)
 print(sampler_data)
 
 lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2021\wq_raw_data_2021.xlsx"
 
-# storm_df = rld.storm_data(lab_data_path, sampler_data)
+# storm_df = rd.lab_data.storm_data(lab_data_path, sampler_data)
 
 # c = cal.conversions()
 # v_ft3 = c.total_vol_ft3(storm_df)
@@ -53,7 +54,7 @@ lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2021\wq_
 #                             "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
 
 
-acid_df = rld.acid_data(lab_data_path, sampler_data)
+acid_df = rd.lab_data.acid_data(lab_data_path, sampler_data)
 
 ca = cal.conversions()
 acid_v_ft3 = ca.total_vol_ft3(acid_df)
