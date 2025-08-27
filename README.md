@@ -191,8 +191,8 @@ iscolitter is set of modules that takes data from cfa <br>
 and volumes from the samplers in the field. 
 
 isco.py incorporates glob to identify the files to be read and utilize<br>
-the classes and functions within read_data.py and calculations with<br>
-concatinated dataframes in a universal format.
+the classes and functions within read_data.py and calculations from<br>
+calculations.py with concatinated dataframes in a universal format.
 
 read_data.py allows data to be read from the samplers and the lab data<br>
 to be read into a pandas dataframe.
