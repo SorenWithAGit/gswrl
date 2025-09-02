@@ -87,5 +87,5 @@ acid_df = acid_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End
 # with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2021\2021_isco_no_acid_calculations.xlsx) as writer:
 #     storm_df.to_excel(writer, sheet_name = "Y14", index = False)
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2021\2021_isco_w_acid_calculations.xlsx") as writer:
-    acid_df.to_excel(writer, sheet_name = "Y14", index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2021\2021_isco_w_acid_calculations.xlsx") as writer:
+#     acid_df.to_excel(writer, sheet_name = "Y14", index = False)
