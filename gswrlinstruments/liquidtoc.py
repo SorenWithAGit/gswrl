@@ -38,7 +38,6 @@ class FormacsTOC():
             "TN Area",
             "TOC (ppm)",
             "TC (ppm)",
-            "TC (ppm)",
             "IC (ppm)",
             "TN (ppm)"])
         self.instrument_info = dict.fromkeys(["Analysis Name",
