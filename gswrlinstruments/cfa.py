@@ -152,6 +152,7 @@ class AA500():
         analy_df["Nitrate/Nitrite"] = NitrateNitrite
         analy_df["Phosphate"] = Phosphate
         analy_df["Ammonium"] = Ammonium
+        analy_df = analy_df.iloc[:, [0, 1, 3, 2]]
         print(ins)
         print(analy_df)
         return [ins, analy_df]
