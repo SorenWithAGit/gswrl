@@ -55,17 +55,23 @@ class agilent():
         df = self.run_df.drop(drop_indexes, axis = 0)
         df = df.drop(["Rack:Tube"], axis = 1)
         df = df.rename(columns = {
-            df.columns[1] : "Aluminium (ppm)",
-            df.columns[2] : "Calcium (ppm)",
-            df.columns[3] : "Copper (ppm)",
-            df.columns[4] : "Iron (ppm)",
-            df.columns[5] : "Potassium (ppm)",
-            df.columns[6] : "Magnesium (ppm)",
-            df.columns[7] : "Manganese (ppm)",
-            df.columns[8] : "Sodium (ppm)",
-            df.columns[9] : "Phosphorus (ppm)",
-            df.columns[10] : "Sulfur (ppm)",
-            df.columns[11] : "Zinc (ppm)"})
+            df.columns[1] : "Aluminium",
+            df.columns[2] : "Calcium",
+            df.columns[3] : "Copper",
+            df.columns[4] : "Iron",
+            df.columns[5] : "Potassium",
+            df.columns[6] : "Magnesium",
+            df.columns[7] : "Manganese",
+            df.columns[8] : "Sodium",
+            df.columns[9] : "Phosphorus",
+            df.columns[10] : "Sulfur",
+            df.columns[11] : "Zinc"})
+        df["Arsenic"] = "NaN"
+        df["Ytrium"] = "NaN"
+        df = df.loc[: ["Aluminium", "Arsenic", "Calcium", "Copper",
+                    "Iron", "Potassium", "Magnesium", "Manganese",
+                    "Sodium", "Phosphorus", "Sulfur", "Zinc",
+                    "Ytrium"]]
         return df
 
 class varian():
@@ -111,15 +117,21 @@ class varian():
         df = df.drop(blank_indexes, axis = 0)
         df = df.drop(["Tube"], axis = 1)
         df = df.rename(columns = {
-            df.columns[1] : "Aluminium (ppm)",
-            df.columns[2] : "Arsenic (ppm)",
-            df.columns[3] : "Calcium (ppm)",
-            df.columns[4] : "Iron (ppm)",
-            df.columns[5] : "Potassium (ppm)",
-            df.columns[6] : "Magnesium (ppm)",
-            df.columns[7] : "Manganese (ppm)",
-            df.columns[8] : "Phosphorus (ppm)",
-            df.columns[9] : "Sulfur (ppm)",
-            df.columns[10] : "Zinc (ppm)",
-            df.columns[11] : "Ytrium (ppm)"})
+            df.columns[1] : "Aluminium",
+            df.columns[2] : "Arsenic",
+            df.columns[3] : "Calcium",
+            df.columns[4] : "Iron",
+            df.columns[5] : "Potassium",
+            df.columns[6] : "Magnesium",
+            df.columns[7] : "Manganese",
+            df.columns[8] : "Phosphorus",
+            df.columns[9] : "Sulfur",
+            df.columns[10] : "Zinc",
+            df.columns[11] : "Ytrium"})
+        df["Copper"] = "NaN"
+        df["Sodium"] = "NaN"
+        df = df.loc[: ["Aluminium", "Arsenic", "Calcium", "Copper",
+                    "Iron", "Potassium", "Magnesium", "Manganese",
+                    "Sodium", "Phosphorus", "Sulfur", "Zinc",
+                    "Ytrium"]]
         return df
