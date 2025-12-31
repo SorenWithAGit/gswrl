@@ -1,0 +1,118 @@
+import pandas as pd
+import read_data as rd
+import calculations as cal
+import glob
+from pathlib import Path
+
+pd.options.mode.copy_on_write = True
+
+
+root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025"
+isco_path = Path(root)
+folder_names = [path.name for path in isco_path.glob("*") if path.is_dir()]
+print(folder_names)
+
+sampler_dfs = []
+for folder in folder_names:
+    sampler_path = root + "\\" + folder
+    sampler_files = glob.glob(str(sampler_path) + "//" + "*.txt", recursive = True)
+    sampler_data = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
+                                        "Start Volume", "End Volume"])
+    for file in sampler_files:
+    #     print("File Path: " + file)
+        sampler_df = rd.sampler_data.read_txt(file)
+        sampler_data = pd.concat([sampler_data, sampler_df]).reset_index(drop = True)
+    # print(sampler_data)
+    sampler_dfs.append(sampler_data)
+dataframes = {
+    "SW12" : sampler_dfs[0],
+    "SW17" : sampler_dfs[1],
+    "W1" : sampler_dfs[2],
+    "W6" : sampler_dfs[6],
+    "W10" : sampler_dfs[3],
+    "W12" : sampler_dfs[4],
+    "W13" : sampler_dfs[5],
+    "Y2" : sampler_dfs[10],
+    "Y6" : sampler_dfs[11],
+    "Y8" : sampler_dfs[12],
+    "Y10" : sampler_dfs[7],
+    "Y13" : sampler_dfs[8],
+    "Y14" : sampler_dfs[9]
+}
+
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+    for sheet_name, dataframe in dataframes.items():
+        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+
+# lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2021\wq_raw_data_2021.xlsx"
+
+# storm_df = rd.lab_data.storm_data(lab_data_path, sampler_data)
+
+# c = cal.conversions()
+# v_ft3 = c.total_vol_ft3(storm_df)
+# storm_df["Total Volume (ft3)"] = v_ft3
+
+# v_mm = c.ft3_to_mm(storm_df)
+# storm_df["Total Volume (mm)"] = v_mm
+
+# kg_ha = c.kg_per_ha(storm_df)
+# storm_df["NO3-N [kg/ha] Sample #1"] = kg_ha[0]
+# storm_df["NO3-N [kg/ha] Sample #2"] = kg_ha[1]
+# storm_df["NO3-N [kg/ha] avg"] = kg_ha[2]
+
+# storm_df["NH3-N [kg/ha] Sample #1"] = kg_ha[3]
+# storm_df["NH3-N [kg/ha] Sample #2"] = kg_ha[4]
+# storm_df["NH3-N [kg/ha] avg"] = kg_ha[5]
+
+# storm_df["PO4-P [kg/ha] Sample #1"] = kg_ha[6]
+# storm_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
+# storm_df["PO4-P [kg/ha] avg"] = kg_ha[8]
+
+# print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+#                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
+
+# storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+#                      "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
+#                         "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
+#                             "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
+#                             "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
+#                             "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
+
+
+# acid_df = rd.lab_data.acid_data(lab_data_path, sampler_data)
+
+# ca = cal.conversions()
+# acid_v_ft3 = ca.total_vol_ft3(acid_df)
+# acid_df["Total Volume (ft3)"] = acid_v_ft3
+
+# acid_v_mm = ca.ft3_to_mm(acid_df)
+# acid_df["Total Volume (mm)"] = acid_v_mm
+
+# acid_kg_ha = ca.kg_per_ha(acid_df)
+# acid_df["NO3-N [kg/ha] Sample #1"] = acid_kg_ha[0]
+# acid_df["NO3-N [kg/ha] Sample #2"] = acid_kg_ha[1]
+# acid_df["NO3-N [kg/ha] avg"] = acid_kg_ha[2]
+
+# acid_df["NH3-N [kg/ha] Sample #1"] = acid_kg_ha[3]
+# acid_df["NH3-N [kg/ha] Sample #2"] = acid_kg_ha[4]
+# acid_df["NH3-N [kg/ha] avg"] = acid_kg_ha[5]
+
+# acid_df["PO4-P [kg/ha] Sample #1"] = acid_kg_ha[6]
+# acid_df["PO4-P [kg/ha] Sample #2"] = acid_kg_ha[7]
+# acid_df["PO4-P [kg/ha] avg"] = acid_kg_ha[8]
+
+# print(acid_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+#                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
+
+# acid_df = acid_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+#                      "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
+#                         "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
+#                             "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
+#                             "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
+#                             "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
+
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2021\2021_isco_no_acid_calculations.xlsx) as writer:
+#     storm_df.to_excel(writer, sheet_name = "Y14", index = False)
+
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2021\2021_isco_w_acid_calculations.xlsx") as writer:
+#     acid_df.to_excel(writer, sheet_name = "Y14", index = False)
