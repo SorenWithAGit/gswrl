@@ -115,7 +115,8 @@ class lab_data:
         for i in sampler_data.index:
             for iter in nutrient_data.index:
                 if sampler_data["Site"][i] == nutrient_data["Sample Name"][iter].split(" ")[0] \
-                    and sampler_data["Date"][i] == nutrient_data["Sample Date"][iter] and nutrient_data["Replicate"][iter] == "#1":
+                    and sampler_data["Date"][i] == nutrient_data["Sample Date"][iter] \
+                        and nutrient_data["Replicate"][iter] == "#1":
                     # print(str(sampler_data["Site"][i]) + " Found! " + str(nutrient_data["Sample Name"][iter]) + " " + \
                     #       str(nutrient_data["Sample Date"][iter]))
                     no3_lst_1.append(nutrient_data["Nitrate Nitrite- Results[mg N/liter]"][iter])
@@ -124,12 +125,13 @@ class lab_data:
                     no3_lst_2.append("NaN")
                     nh3_lst_2.append("NaN")
                     po4_lst_2.append("NaN")
-        storm_df["NO3-N [mg N/liter] smpl 1"] = no3_lst_1
-        storm_df["NH3-N [mg N/liter] smpl 1"] = nh3_lst_1
-        storm_df["PO4-P [mg P/liter] smpl 1"] = po4_lst_1
-        storm_df["NO3-N [mg N/liter] smpl 2"] = no3_lst_2
-        storm_df["NH3-N [mg N/liter] smpl 2"] = nh3_lst_2
-        storm_df["PO4-P [mg P/liter] smpl 2"] = po4_lst_2
+
+        storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(no3_lst_1)
+        storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(nh3_lst_1)
+        storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(po4_lst_1)
+        storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(no3_lst_2)
+        storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(nh3_lst_2)
+        storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(po4_lst_2)
 
 
         for i in storm_df.index:
@@ -149,12 +151,22 @@ class lab_data:
         for i in storm_df.index:
             if storm_df["NO3-N [mg N/liter] smpl 2"][i] != "NaN":
                 storm_df.at[i, "NO3-N [mg N/liter] avg"] = (storm_df["NO3-N [mg N/liter] smpl 1"][i] + storm_df["NO3-N [mg N/liter] smpl 2"][i]) / 2 
-
+            
+            if storm_df["NO3-N [mg N/liter] smpl 2"][i] == "NaN":
+                storm_df.at[i, "NO3-N [mg N/liter] avg"] = storm_df["NO3-N [mg N/liter] smpl 1"][i]
+                            
             if storm_df["NH3-N [mg N/liter] smpl 2"][i] != "NaN":
                 storm_df.at[i, "NH3-N [mg N/liter] avg"] = (storm_df["NH3-N [mg N/liter] smpl 1"][i] + storm_df["NH3-N [mg N/liter] smpl 2"][i]) / 2
 
+            if storm_df["NH3-N [mg N/liter] smpl 2"][i] == "NaN":
+                storm_df.at[i, "NH3-N [mg N/liter] avg"] = storm_df["NH3-N [mg N/liter] smpl 1"][i]
+
             if storm_df["PO4-P [mg P/liter] smpl 2"][i] != "NaN":
                 storm_df.at[i, "PO4-P [mg P/liter] avg"] = (storm_df["PO4-P [mg P/liter] smpl 1"][i] + storm_df["PO4-P [mg P/liter] smpl 2"][i]) / 2
+
+            if storm_df["PO4-P [mg P/liter] smpl 2"][i] == "NaN":
+                storm_df.at[i, "PO4-P [mg P/liter] avg"] = storm_df["PO4-P [mg P/liter] smpl 1"][i]
+                
         return storm_df
 
 
@@ -197,12 +209,12 @@ class lab_data:
                     acid_po4_lst_2.append("NaN")
 
         acid_storm_df = sampler_data
-        acid_storm_df["NO3-N [mg N/liter] smpl 1"] = acid_no3_lst_1
-        acid_storm_df["NH3-N [mg N/liter] smpl 1"] = acid_nh3_lst_1
-        acid_storm_df["PO4-P [mg P/liter] smpl 1"] = acid_po4_lst_1
-        acid_storm_df["NO3-N [mg N/liter] smpl 2"] = acid_no3_lst_2
-        acid_storm_df["NH3-N [mg N/liter] smpl 2"] = acid_nh3_lst_2
-        acid_storm_df["PO4-P [mg P/liter] smpl 2"] = acid_po4_lst_2
+        acid_storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(acid_no3_lst_1)
+        acid_storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(acid_nh3_lst_1)
+        acid_storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(acid_po4_lst_1)
+        acid_storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(acid_no3_lst_2)
+        acid_storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(acid_nh3_lst_2)
+        acid_storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(acid_po4_lst_2)
 
         for i in acid_storm_df.index:
             for iter in nutrient_acid_data.index:
@@ -221,11 +233,19 @@ class lab_data:
         for i in acid_storm_df.index:
             if acid_storm_df["NO3-N [mg N/liter] smpl 2"][i] != "NaN":
                 acid_storm_df.at[i, "NO3-N [mg N/liter] avg"] = (acid_storm_df["NO3-N [mg N/liter] smpl 1"][i] + acid_storm_df["NO3-N [mg N/liter] smpl 2"][i]) / 2 
+            
+            if acid_storm_df["NO3-N [mg N/liter] smpl 2"][i] == "NaN":
+                acid_storm_df.at[i, "NO3-N [mg N/liter] avg"] = acid_storm_df["NO3-N [mg N/liter] smpl 1"][i]
 
             if acid_storm_df["NH3-N [mg N/liter] smpl 2"][i] != "NaN":
                 acid_storm_df.at[i, "NH3-N [mg N/liter] avg"] = (acid_storm_df["NH3-N [mg N/liter] smpl 1"][i] + acid_storm_df["NH3-N [mg N/liter] smpl 2"][i]) / 2
 
+            if acid_storm_df["NH3-N [mg N/liter] smpl 2"][i] == "NaN":
+                acid_storm_df.at[i, "NH3-N [mg N/liter] avg"] = acid_storm_df["NH3-N [mg N/liter] smpl 1"][i]
+
             if acid_storm_df["PO4-P [mg P/liter] smpl 2"][i] != "NaN":
                 acid_storm_df.at[i, "PO4-P [mg P/liter] avg"] = (acid_storm_df["PO4-P [mg P/liter] smpl 1"][i] + acid_storm_df["PO4-P [mg P/liter] smpl 2"][i]) / 2
 
+            if acid_storm_df["PO4-P [mg P/liter] smpl 2"][i] == "NaN":
+                acid_storm_df.at[i, "PO4-P [mg P/liter] avg"] = acid_storm_df["PO4-P [mg P/liter] smpl 1"][i]
         return acid_storm_df
