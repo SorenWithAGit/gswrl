@@ -89,6 +89,7 @@ for field, df in dataframes.items():
     print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
                     "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
 
+    # organize columns
     storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
                         "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
                             "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
@@ -110,21 +111,28 @@ for site, df in dataframes.items():
 
     # calculate loads
     kg_ha = c.kg_per_ha(acid_storm_df)
+
+    # calculate load for NO3 for sample #1 & #2 and average
     acid_storm_df["NO3-N [kg/ha] Sample #1"] = kg_ha[0]
     acid_storm_df["NO3-N [kg/ha] Sample #2"] = kg_ha[1]
     acid_storm_df["NO3-N [kg/ha] avg"] = kg_ha[2]
 
+    # calculate load for NH3 for sample #1 & #2 and average
     acid_storm_df["NH3-N [kg/ha] Sample #1"] = kg_ha[3]
     acid_storm_df["NH3-N [kg/ha] Sample #2"] = kg_ha[4]
     acid_storm_df["NH3-N [kg/ha] avg"] = kg_ha[5]
 
+    # calculate load for PO4 for sample #1 & #2 and average
     acid_storm_df["PO4-P [kg/ha] Sample #1"] = kg_ha[6]
     acid_storm_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
     acid_storm_df["PO4-P [kg/ha] avg"] = kg_ha[8]
 
     # print(acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
     #                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
+    print(acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+                         "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
 
+    # organize columns
     acid_storm_df = acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
                         "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
                             "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
