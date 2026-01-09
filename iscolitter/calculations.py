@@ -112,7 +112,7 @@ class conversions():
                                                 no3_avg_val = (((storm_df["NO3-N [mg N/liter] avg"][i] * self.l_per_ft3 * storm_df["Total Volume (ft3)"][i] * self.acre_per_hectare))/((self.mm_per_l * self.mg_per_kg * self.field_df["area (ac)"][id])))
                                                 no3_avg_lst.append(no3_avg_val)
                                         except:
-                                                no3_avg_lst.append("NaN")
+                                                no3_avg_lst.append(no3_s1_val)
 
                                         nh3_s1_val = (((storm_df["NH3-N [mg N/liter] smpl 1"][i] * self.l_per_ft3 * storm_df["Total Volume (ft3)"][i] * self.acre_per_hectare))/((self.mm_per_l * self.mg_per_kg * self.field_df["area (ac)"][id])))
                                         nh3_s1_lst.append(nh3_s1_val)
@@ -125,7 +125,7 @@ class conversions():
                                                 nh3_avg_val = (((storm_df["NH3-N [mg N/liter] avg"][i] * self.l_per_ft3 * storm_df["Total Volume (ft3)"][i] * self.acre_per_hectare))/((self.mm_per_l * self.mg_per_kg * self.field_df["area (ac)"][id])))
                                                 nh3_avg_lst.append(nh3_avg_val)
                                         except:
-                                                nh3_avg_lst.append("NaN")
+                                                nh3_avg_lst.append(nh3_s1_val)
 
                                         po4_s1_val = (((storm_df["PO4-P [mg P/liter] smpl 1"][i] * self.l_per_ft3 * storm_df["Total Volume (ft3)"][i] * self.acre_per_hectare))/((self.mm_per_l * self.mg_per_kg * self.field_df["area (ac)"][id])))
                                         po4_s1_lst.append(po4_s1_val)
@@ -138,6 +138,6 @@ class conversions():
                                                 po4_avg_val = (((storm_df["PO4-P [mg P/liter] avg"][i] * self.l_per_ft3 * storm_df["Total Volume (ft3)"][i] * self.acre_per_hectare))/((self.mm_per_l * self.mg_per_kg * self.field_df["area (ac)"][id])))
                                                 po4_avg_lst.append(po4_avg_val)
                                         except:
-                                                po4_avg_lst.append("NaN")
+                                                po4_avg_lst.append(po4_s1_val)
 
                 return no3_s1_lst, no3_s2_lst, no3_avg_lst, nh3_s1_lst, nh3_s2_lst, nh3_avg_lst, po4_s1_lst, po4_s2_lst, po4_avg_lst
