@@ -91,11 +91,15 @@ for field, df in dataframes.items():
     # print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
     #                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
 
+    storm_df["Sample Type"] = "Nutrients"
+
     print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
-                    "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
+                    "Sample Type", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
+    
 
     # organize columns.
-    storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+    storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
+                         "Total Volume (mm)", "Sample Type", \
                         "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
                             "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
                                 "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
@@ -135,13 +139,17 @@ for site, df in dataframes.items():
     acid_storm_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
     acid_storm_df["PO4-P [kg/ha] avg"] = kg_ha[8]
 
+    acid_storm_df["Sample Type"] = "Acid Nutrients"
+
     # print(acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
     #                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
     print(acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
-                         "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
+                         "Sample Type", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
+    
 
     # organize columns.
-    acid_storm_df = acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+    acid_storm_df = acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
+                                   "Total Volume (mm)", "Sample Type", \
                         "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
                             "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
                                 "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
@@ -183,8 +191,23 @@ acid_storm_dataframes = {
     "Y14" : acid_storm_dfs[9]
 }
 
+combined_dataframes = {
+"SW12" : pd.concat([storm_dfs[0], acid_storm_dfs[0]]),
+    "SW17" : pd.concat([storm_dfs[1], acid_storm_dfs[1]]),
+    "W1" : pd.concat([storm_dfs[2], acid_storm_dfs[2]]),
+    "W6" : pd.concat([storm_dfs[6], acid_storm_dfs[6]]),
+    "W10" : pd.concat([storm_dfs[3], acid_storm_dfs[3]]),
+    "W12" : pd.concat([storm_dfs[4], acid_storm_dfs[4]]),
+    "W13" : pd.concat([storm_dfs[5], acid_storm_dfs[5]]),
+    "Y2" : pd.concat([storm_dfs[10], acid_storm_dfs[10]]),
+    "Y6" : pd.concat([storm_dfs[11], acid_storm_dfs[11]]),
+    "Y8" : pd.concat([storm_dfs[12], acid_storm_dfs[12]]),
+    "Y10" : pd.concat([storm_dfs[7], acid_storm_dfs[7]]),
+    "Y13" : pd.concat([storm_dfs[8], acid_storm_dfs[8]]),
+    "Y14" : pd.concat([storm_dfs[9], acid_storm_dfs[9]])
+}
 
-#Write each storm DataFrame to new sheet in excel
+# Write each storm DataFrame to new sheet in excel
 
 # with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Nutrient_Data.xlsx") as writer:
 #     for sheet_name, dataframe in storm_dataframes.items():
@@ -196,3 +219,8 @@ acid_storm_dataframes = {
 #     for sheet_name, dataframe in acid_storm_dataframes.items():
 #         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
+# write each combined DataFrame to new sheet in excel
+
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
+#     for sheet_name, dataframe in combined_dataframes.items():
+#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
