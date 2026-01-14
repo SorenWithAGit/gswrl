@@ -52,9 +52,9 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
-    for sheet_name, dataframe in dataframes.items():
-        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+#     for sheet_name, dataframe in dataframes.items():
+#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
 
 # Join Nutrient Data and carry out conversions and calculations
@@ -164,6 +164,7 @@ fields = [
      "W13", "Y2", "Y6",
      "Y8", "Y10", "Y13",
      "Y14"
+]
 
 
 # # Write each storm DataFrame to new sheet in excel
