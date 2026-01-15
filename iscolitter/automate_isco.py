@@ -27,7 +27,7 @@ for folder in folder_names:
     sampler_data = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
                                         "Start Volume", "End Volume"])
     for file in sampler_files:
-    # print("File Path: " + file)
+        # print("File Path: " + file)
         sampler_df = rd.sampler_data.read_txt(file)
         sampler_data = pd.concat([sampler_data, sampler_df]).reset_index(drop = True)
     # print(sampler_data)
@@ -52,9 +52,9 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
-#     for sheet_name, dataframe in dataframes.items():
-#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+    for sheet_name, dataframe in dataframes.items():
+        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
 
 # Join Nutrient Data and carry out conversions and calculations
@@ -157,7 +157,7 @@ for site, df in dataframes.items():
                                 "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
     acid_storm_dfs.append(acid_storm_df)
 
-# Create dictionary of storm DataFrames.
+
 fields = [
      "SW12", "SW17", "W1",
      "W6", "W10", "W12",

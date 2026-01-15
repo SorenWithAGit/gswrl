@@ -14,6 +14,7 @@ class sampler_data:
                 if "------- ------ ----  -----  ----- -------------" in line:
                     begin_line = line_count + 1
                     # print("begin line: " + str(begin_line))
+                    # print(lines[begin_line])
                     break
             # print(str(file) + "Begin Line: " + str(begin_line))
 
