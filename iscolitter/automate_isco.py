@@ -9,7 +9,7 @@ pd.options.mode.copy_on_write = True
 
 # Create paths to folders and lab data.
 root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025"
-lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\2025\2025 Riesel Water Quality.xlsx"
+lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2025\water_quality_2025.xlsx"
 
 # Collect subfolders.
 isco_path = Path(root)
@@ -52,9 +52,9 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
-    for sheet_name, dataframe in dataframes.items():
-        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+#     for sheet_name, dataframe in dataframes.items():
+#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
 
 # Join Nutrient Data and carry out conversions and calculations
@@ -88,8 +88,8 @@ for field, df in dataframes.items():
     storm_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
     storm_df["PO4-P [kg/ha] avg"] = kg_ha[8]
 
-    # print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
-    #                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
+    print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+                    "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
 
     storm_df["Sample Type"] = "Nutrients"
 
