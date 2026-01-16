@@ -31,7 +31,7 @@ class San():
     """
     This class represents the output data of the Skalar San++ CFA.
     """
-    def __init__(self, file_name):
+    def __init__(self, file_name, lab_numbers_file = None, sheet = None):
         """
         Reads excel file into a pandas.DataFrame.
         Args:
@@ -39,6 +39,14 @@ class San():
         """
         self.file_name = file_name
         self.data = pd.read_excel(self.file_name)
+
+        if lab_numbers_file != None:
+            self.id_path = lab_numbers_file
+            self.ids = pd.read_excel(self.id_path, sheet_name = sheet)
+            self.ids =  self.ids.drop(columns = ["Rep", "Treatment", "Depth", "Distance",
+                          "Project Name", "Extraction", "Amount", 
+                          "Analysis Date", "Note"])
+
 
     def DI_H3A_data(self):
         """
@@ -58,7 +66,17 @@ class San():
                       "ResultID", "Position ",
                       "SampleType",
                       "PDCupsHistory"], axis = 1)
+        if hasattr(self, "ids"):
+            df = df.rename(columns = {"SampleIdentity" : "Lab ID"})
+            df = pd.merge(df, self.ids, on = "Lab ID", how = "left")
+            df = df.iloc[:, [0, 4, 6, 5, 1, 3, 2]]
+            # print(df)
+        else:
+            df = df.iloc[:, [0, 1, 3, 2]]
+
         return df
+        
+
 
     def KCL_data(self):
         """
@@ -80,7 +98,13 @@ class San():
                       "SampleType",
                       "PDCupsHistory"], axis = 1)
         df["Phosphate- Results[mg P/liter]"] = "NaN"
-        df = df.iloc[:, [0, 1, 3, 2]]
+        if hasattr(self, "ids"):
+            df = df.rename(columns = {"SampleIdentity" : "Lab ID"})
+            df = pd.merge(df, self.ids, on = "Lab ID", how = "left")
+            print(df)
+            df = df.iloc[:, [0, 4, 6, 5, 1, 3, 2]]
+        else: 
+            df = df.iloc[:, [0, 1, 3, 2]]
         return df
 
 
@@ -156,3 +180,4 @@ class AA500():
         print(ins)
         print(analy_df)
         return [ins, analy_df]
+

@@ -4,13 +4,41 @@ import glob
 import pandas as pd
 from pathlib import Path
 
-def main(input_path, file_type, module, m_class, function, output_path):
+def main(input_path, file_type, module, m_class, function, output_path, lab_id_path, sheet):
     
     files = glob.glob(str(input_path) + "//" + "*." + str(file_type), recursive = True)
     
     ####################################################################
     # Logic to differentiate arguments passed for CFA Data.
-    if module == "cfa" and m_class == "San" and function == "DI_H3A_Data":
+    if args.lab_id_path is not None and module == "cfa" and m_class == "San" and function == "DI_H3A_Data":
+        DI_H3A_df = pd.DataFrame(columns = [
+             "Lab ID",
+             "Sample Name",
+             "Sample Date",
+             "Sample Type", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
+        
+        for file in files:
+            run = gs.cfa.San(file, lab_id_path, sheet)
+            data = run.DI_H3A_data()
+            DI_H3A_df = pd.concat([DI_H3A_df, data])
+        DI_H3A_df = DI_H3A_df.reindex(columns = [
+             "Lab ID",
+             "Sample Name",
+             "Sample Date",
+             "Sample Type", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
+        DI_H3A_df["Sample Date"] = DI_H3A_df["Sample Date"].dt.strftime("%m/%d/%Y")
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    DI_H3A_df.to_excel(writer, index = False)
+        return DI_H3A_df
+    
+    elif module == "cfa" and m_class == "San" and function == "DI_H3A_Data":
         DI_H3A_df = pd.DataFrame(columns = [
             "SampleIdentity",
             "Nitrate Nitrite- Results[mg N/liter]",
@@ -341,5 +369,11 @@ if __name__ == "__main__":
     parser.add_argument("--output_path",
                         type = str,
                         required = False)
+    parser.add_argument("--lab_id_path",
+                        type = str,
+                        required = False)
+    parser.add_argument("--sheet",
+                        type = str,
+                        required = False)
     args = parser.parse_args()
-    main(args.input_path, args.file_type, args.module, args.m_class, args.function, args.output_path)
+    main(args.input_path, args.file_type, args.module, args.m_class, args.function, args.output_path, args.lab_id_path, args.sheet)
