@@ -142,63 +142,63 @@ class conversions():
                 return no3_s1_lst, no3_s2_lst, no3_avg_lst, nh3_s1_lst, nh3_s2_lst, nh3_avg_lst, po4_s1_lst, po4_s2_lst, po4_avg_lst
 
 
-w13 = {"Site" : "W13",
-       "Date" : "11-21-2025",
-       "Units" : "cf",
-       "# of Samples" : 4,
-       "Start Volume" : 2100,
-       "End Volume" : 8500}
-w13_df = pd.DataFrame(w13, index = [0])
-c = conversions()
-tvol = c.total_vol_ft3(w13_df)
-w13_df["Total Volume (ft3)"] = tvol
-mmvol = c.ft3_to_mm(w13_df)
-w13_df["Total Volume (mm)"] = mmvol
+# w13 = {"Site" : "W13",
+#        "Date" : "11-21-2025",
+#        "Units" : "cf",
+#        "# of Samples" : 4,
+#        "Start Volume" : 2100,
+#        "End Volume" : 8500}
+# w13_df = pd.DataFrame(w13, index = [0])
+# c = conversions()
+# tvol = c.total_vol_ft3(w13_df)
+# w13_df["Total Volume (ft3)"] = tvol
+# mmvol = c.ft3_to_mm(w13_df)
+# w13_df["Total Volume (mm)"] = mmvol
+# # print(w13_df)
+
+# no3 = 0.6
+# nh3 = 0.29
+# po4 = 0.85
+
+# w13_df["NO3-N [mg N/liter] smpl 1"] = no3
+# w13_df["NH3-N [mg N/liter] smpl 1"] = nh3
+# w13_df["PO4-P [mg P/liter] smpl 1"] = po4
+# w13_df["NO3-N [mg N/liter] smpl 2"] = "NaN"
+# w13_df["NH3-N [mg N/liter] smpl 2"] = "NaN"
+# w13_df["PO4-P [mg P/liter] smpl 2"] = "NaN"
+# w13_df["NO3-N [mg N/liter] avg"] = no3
+# w13_df["NH3-N [mg N/liter] avg"] = nh3
+# w13_df["PO4-P [mg P/liter] avg"] = po4
+# # print(w13_df)
+
+# kg_ha = c.kg_per_ha(w13_df)
+
+# # calculate load for NO3 for sample #1 & #2 and average.
+# w13_df["NO3-N [kg/ha] Sample #1"] = kg_ha[0]
+# w13_df["NO3-N [kg/ha] Sample #2"] = kg_ha[1]
+# w13_df["NO3-N [kg/ha] avg"] = kg_ha[2]
+
+# # calculate load for NH3 for sample #1 & #2 and average.
+# w13_df["NH3-N [kg/ha] Sample #1"] = kg_ha[3]
+# w13_df["NH3-N [kg/ha] Sample #2"] = kg_ha[4]
+# w13_df["NH3-N [kg/ha] avg"] = kg_ha[5]
+
+# # calculate load for PO4 for sample #1 & #2 and average.
+# w13_df["PO4-P [kg/ha] Sample #1"] = kg_ha[6]
+# w13_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
+# w13_df["PO4-P [kg/ha] avg"] = kg_ha[8]
+
+# w13_df["Sample Type"] = "Acid Nutrients"
+
+# w13_df = w13_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
+#                                    "Total Volume (mm)", "Sample Type", \
+#                         "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
+#                             "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
+#                                 "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
+#                                 "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
+#                                 "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
+
 # print(w13_df)
 
-no3 = 0.6
-nh3 = 0.29
-po4 = 0.85
-
-w13_df["NO3-N [mg N/liter] smpl 1"] = no3
-w13_df["NH3-N [mg N/liter] smpl 1"] = nh3
-w13_df["PO4-P [mg P/liter] smpl 1"] = po4
-w13_df["NO3-N [mg N/liter] smpl 2"] = "NaN"
-w13_df["NH3-N [mg N/liter] smpl 2"] = "NaN"
-w13_df["PO4-P [mg P/liter] smpl 2"] = "NaN"
-w13_df["NO3-N [mg N/liter] avg"] = no3
-w13_df["NH3-N [mg N/liter] avg"] = nh3
-w13_df["PO4-P [mg P/liter] avg"] = po4
-# print(w13_df)
-
-kg_ha = c.kg_per_ha(w13_df)
-
-# calculate load for NO3 for sample #1 & #2 and average.
-w13_df["NO3-N [kg/ha] Sample #1"] = kg_ha[0]
-w13_df["NO3-N [kg/ha] Sample #2"] = kg_ha[1]
-w13_df["NO3-N [kg/ha] avg"] = kg_ha[2]
-
-# calculate load for NH3 for sample #1 & #2 and average.
-w13_df["NH3-N [kg/ha] Sample #1"] = kg_ha[3]
-w13_df["NH3-N [kg/ha] Sample #2"] = kg_ha[4]
-w13_df["NH3-N [kg/ha] avg"] = kg_ha[5]
-
-# calculate load for PO4 for sample #1 & #2 and average.
-w13_df["PO4-P [kg/ha] Sample #1"] = kg_ha[6]
-w13_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
-w13_df["PO4-P [kg/ha] avg"] = kg_ha[8]
-
-w13_df["Sample Type"] = "Acid Nutrients"
-
-w13_df = w13_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
-                                   "Total Volume (mm)", "Sample Type", \
-                        "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
-                            "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
-                                "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
-                                "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
-                                "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
-
-print(w13_df)
-
-w13_df.to_excel(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\w13_point.xlsx")
+# w13_df.to_excel(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\w13_point.xlsx")
 
