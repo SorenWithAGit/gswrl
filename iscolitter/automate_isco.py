@@ -9,7 +9,7 @@ pd.options.mode.copy_on_write = True
 
 # Create paths to folders and lab data.
 root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025"
-lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2025\water_quality_2025.xlsx"
+lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\wq_raw_data_2025.xlsx"
 
 # Collect subfolders.
 isco_path = Path(root)
@@ -30,6 +30,9 @@ for folder in folder_names:
         # print("File Path: " + file)
         sampler_df = rd.sampler_data.read_txt(file)
         sampler_data = pd.concat([sampler_data, sampler_df]).reset_index(drop = True)
+        
+    sampler_data["Date"] = pd.to_datetime(sampler_data["Date"])
+    sampler_data["Date"] = sampler_data["Date"].dt.strftime("%m-%d-%Y")
     # print(sampler_data)
     sampler_dfs.append(sampler_data)
 
@@ -52,9 +55,9 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
-#     for sheet_name, dataframe in dataframes.items():
-#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+    for sheet_name, dataframe in dataframes.items():
+        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
 
 # Join Nutrient Data and carry out conversions and calculations
@@ -88,8 +91,8 @@ for field, df in dataframes.items():
     storm_df["PO4-P [kg/ha] Sample #2"] = kg_ha[7]
     storm_df["PO4-P [kg/ha] avg"] = kg_ha[8]
 
-    print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
-                    "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
+    # print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
+    #                 "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]])
 
     storm_df["Sample Type"] = "Nutrients"
 
@@ -99,12 +102,16 @@ for field, df in dataframes.items():
 
     # organize columns.
     storm_df = storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
-                         "Total Volume (mm)", "Sample Type", \
-                        "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
-                            "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
-                                "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
-                                "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
-                                "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
+                                   "Total Volume (mm)", "Sample Type", \
+                                    "NO3-N [mg N/liter] smpl 1", "NH3-N [mg N/liter] smpl 1","PO4-P [mg P/liter] smpl 1", \
+                                     "NO3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] smpl 2", "PO4-P [mg P/liter] smpl 2", \
+                                     "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] avg","PO4-P [mg P/liter] avg", \
+                                     "NO3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #1", "PO4-P [kg/ha] Sample #1", \
+                                     "NO3-N [kg/ha] Sample #2", "NH3-N [kg/ha] Sample #2", "PO4-P [kg/ha] Sample #2", \
+                                     "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]]
+    storm_df["Date"] = pd.to_datetime(storm_df["Date"])
+    storm_df["Date"] = storm_df["Date"].dt.strftime("%m-%d-%Y")
+    
     storm_dfs.append(storm_df)
 
 
@@ -148,13 +155,17 @@ for site, df in dataframes.items():
     
 
     # organize columns.
+
     acid_storm_df = acid_storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", \
                                    "Total Volume (mm)", "Sample Type", \
-                        "NO3-N [mg N/liter] smpl 1", "NO3-N [mg N/liter] smpl 2", "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] smpl 1", \
-                            "NH3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] avg", "PO4-P [mg P/liter] smpl 1", "PO4-P [mg P/liter] smpl 2", \
-                                "PO4-P [mg P/liter] avg", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg", \
-                                "NH3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #2", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] Sample #1", \
-                                "PO4-P [kg/ha] Sample #2", "PO4-P [kg/ha] avg"]]
+                                    "NO3-N [mg N/liter] smpl 1", "NH3-N [mg N/liter] smpl 1","PO4-P [mg P/liter] smpl 1", \
+                                     "NO3-N [mg N/liter] smpl 2", "NH3-N [mg N/liter] smpl 2", "PO4-P [mg P/liter] smpl 2", \
+                                     "NO3-N [mg N/liter] avg", "NH3-N [mg N/liter] avg","PO4-P [mg P/liter] avg", \
+                                     "NO3-N [kg/ha] Sample #1", "NH3-N [kg/ha] Sample #1", "PO4-P [kg/ha] Sample #1", \
+                                     "NO3-N [kg/ha] Sample #2", "NH3-N [kg/ha] Sample #2", "PO4-P [kg/ha] Sample #2", \
+                                     "NO3-N [kg/ha] avg", "NH3-N [kg/ha] avg", "PO4-P [kg/ha] avg"]]
+    acid_storm_df["Date"] = pd.to_datetime(acid_storm_df["Date"])
+    acid_storm_df["Date"] = acid_storm_df["Date"].dt.strftime("%m-%d-%Y")
     acid_storm_dfs.append(acid_storm_df)
 
 
@@ -167,23 +178,26 @@ fields = [
 ]
 
 
-# # Write each storm DataFrame to new sheet in excel
+# # # # Write each storm DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Nutrient_Data.xlsx") as writer:
-#     for i, field in enumerate(fields):
-#         dataframe = storm_dfs[i]
-#         dataframe.to_excel(writer, sheet_name = field, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Nutrient_Data.xlsx") as writer:
+    for i, field in enumerate(fields):
+        dataframe = storm_dfs[i]
+        dataframe.to_excel(writer, sheet_name = field, index = False)
 
-# # # Write each acid_storm DataFrame to new sheet in excel
+# # # # # # Write each acid_storm DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Acid_Nutrient_Data.xlsx") as writer:
-#     for i, field in enumerate(fields):
-#         dataframe = acid_storm_dfs[i]
-#         dataframe.to_excel(writer, sheet_name = field, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Acid_Nutrient_Data.xlsx") as writer:
+    for i, field in enumerate(fields):
+        dataframe = acid_storm_dfs[i]
+        dataframe.to_excel(writer, sheet_name = field, index = False)
 
-# # write each combined DataFrame to new sheet in excel
+# # # # # write each combined DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
-#     for i, field in enumerate(fields):
-#         dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
-#         dataframe.to_excel(writer, sheet_name = field, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
+    for i, field in enumerate(fields):
+        dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
+        dataframe.to_excel(writer, sheet_name = field, index = False)
+
+# print(storm_dfs[6][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
+# print(storm_dfs[6].dtypes)

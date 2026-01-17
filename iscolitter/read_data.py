@@ -89,11 +89,8 @@ class sampler_data:
 class lab_data:
     def storm_data(file_path, sampler_data):
         lab_data = pd.read_excel(file_path)
-        try:
-            lab_data = lab_data[~lab_data["Sample Type"].isin(["BF", "BFA", "RF", "DI", "H3A", "KCl"])]
-        except:
-            pass            
-        # lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
+        lab_data["Sample Date"] = pd.to_datetime(lab_data["Sample Date"])
+        lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
         for entry in lab_data.index:
             if lab_data["Nitrate Nitrite- Results[mg N/liter]"][entry] < 0:
                 lab_data.at[entry, "Nitrate Nitrite- Results[mg N/liter]"] = 0.05
@@ -177,11 +174,8 @@ class lab_data:
 
     def acid_data(file_path, sampler_data):
         lab_data = pd.read_excel(file_path)
-        try:
-            lab_data = lab_data[~lab_data["Sample Type"].isin(["BF", "BFA", "RF", "DI", "H3A", "KCl"])]
-        except:
-            pass         
-        # lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
+        lab_data["Sample Date"] = pd.to_datetime(lab_data["Sample Date"])
+        lab_data["Sample Date"] = lab_data["Sample Date"].dt.strftime("%m-%d-%Y")
         for entry in lab_data.index:
             if lab_data["Nitrate Nitrite- Results[mg N/liter]"][entry] < 0:
                 lab_data.at[entry, "Nitrate Nitrite- Results[mg N/liter]"] = 0.05
