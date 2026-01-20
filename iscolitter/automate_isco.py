@@ -8,7 +8,7 @@ pd.options.mode.copy_on_write = True
 
 
 # Create paths to folders and lab data.
-root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\check folder\2025"
+root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025"
 lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\wq_raw_data_2025.xlsx"
 
 # Collect subfolders.
@@ -25,7 +25,9 @@ for folder in folder_names:
     sampler_path = root + "\\" + folder
     sampler_files = glob.glob(str(sampler_path) + "//" + "*.txt", recursive = True)
     sampler_data = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
-                                        "Start Volume", "End Volume"])
+                                        "Start Volume", "End Volume"]).astype({"Site" : "str", "Date" : "str", "Units" : "str", 
+                                          "# of Samples" : "int", "Start Volume" : "float", 
+                                          "End Volume" : "float"})
     for file in sampler_files:
         # print("File Path: " + file)
         sampler_df = rd.sampler_data.read_txt(file)
@@ -55,9 +57,9 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\check folder\2025\2025_ISCO_Sampler_data_no_sample.xlsx") as writer:
-    for sheet_name, dataframe in dataframes.items():
-        dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\check folder\2025\2025_ISCO_Sampler_data_no_sample.xlsx") as writer:
+#     for sheet_name, dataframe in dataframes.items():
+#         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
 
 # Join Nutrient Data and carry out conversions and calculations
@@ -97,7 +99,7 @@ for field, df in dataframes.items():
     storm_df["Sample Type"] = "Nutrients"
 
     # print(storm_df[["Site", "Date", "Units", "# of Samples", "Start Volume", "End Volume", "Total Volume (ft3)", "Total Volume (mm)", \
-    #                 "Sample Type", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
+                    # "Sample Type", "NO3-N [kg/ha] Sample #1", "NO3-N [kg/ha] Sample #2", "NO3-N [kg/ha] avg"]])
     
 
     # organize columns.
@@ -199,5 +201,5 @@ fields = [
 #         dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
 #         dataframe.to_excel(writer, sheet_name = field, index = False)
 
-# print(storm_dfs[6][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
-# print(storm_dfs[6].dtypes)
+print(storm_dfs[12][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
+# print(storm_dfs[12].dtypes)
