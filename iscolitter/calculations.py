@@ -142,19 +142,19 @@ class conversions():
                 return no3_s1_lst, no3_s2_lst, no3_avg_lst, nh3_s1_lst, nh3_s2_lst, nh3_avg_lst, po4_s1_lst, po4_s2_lst, po4_avg_lst
 
 
-# w13 = {"Site" : "W13",
-#        "Date" : "11-21-2025",
-#        "Units" : "cf",
-#        "# of Samples" : 4,
-#        "Start Volume" : 2100,
-#        "End Volume" : 8500}
-# w13_df = pd.DataFrame(w13, index = [0])
-# c = conversions()
-# tvol = c.total_vol_ft3(w13_df)
-# w13_df["Total Volume (ft3)"] = tvol
-# mmvol = c.ft3_to_mm(w13_df)
-# w13_df["Total Volume (mm)"] = mmvol
-# # print(w13_df)
+w13 = {"Site" : "Y14",
+       "Date" : "05-26-2025",
+       "Units" : "cf",
+       "# of Samples" : 1,
+       "Start Volume" : 1300,
+       "End Volume" : 1300}
+w13_df = pd.DataFrame(w13, index = [0])
+c = conversions()
+tvol = c.total_vol_ft3(w13_df)
+w13_df["Total Volume (ft3)"] = tvol
+mmvol = c.ft3_to_mm(w13_df)
+w13_df["Total Volume (mm)"] = mmvol
+print(w13_df)
 
 # no3 = 0.6
 # nh3 = 0.29

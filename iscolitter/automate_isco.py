@@ -8,7 +8,7 @@ pd.options.mode.copy_on_write = True
 
 
 # Create paths to folders and lab data.
-root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025"
+root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\check folder\2025"
 lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\wq_raw_data_2025.xlsx"
 
 # Collect subfolders.
@@ -55,7 +55,7 @@ dataframes = {
 
 # Write each DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Sampler_data.xlsx") as writer:
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\check folder\2025\2025_ISCO_Sampler_data_no_sample.xlsx") as writer:
     for sheet_name, dataframe in dataframes.items():
         dataframe.to_excel(writer, sheet_name = sheet_name, index = False)
 
@@ -180,24 +180,24 @@ fields = [
 
 # # # # Write each storm DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Nutrient_Data.xlsx") as writer:
-    for i, field in enumerate(fields):
-        dataframe = storm_dfs[i]
-        dataframe.to_excel(writer, sheet_name = field, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Nutrient_Data.xlsx") as writer:
+#     for i, field in enumerate(fields):
+#         dataframe = storm_dfs[i]
+#         dataframe.to_excel(writer, sheet_name = field, index = False)
 
-# # # # # # Write each acid_storm DataFrame to new sheet in excel
+# # # # # # # Write each acid_storm DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Acid_Nutrient_Data.xlsx") as writer:
-    for i, field in enumerate(fields):
-        dataframe = acid_storm_dfs[i]
-        dataframe.to_excel(writer, sheet_name = field, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_Acid_Nutrient_Data.xlsx") as writer:
+#     for i, field in enumerate(fields):
+#         dataframe = acid_storm_dfs[i]
+#         dataframe.to_excel(writer, sheet_name = field, index = False)
 
-# # # # # write each combined DataFrame to new sheet in excel
+# # # # # # write each combined DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
-    for i, field in enumerate(fields):
-        dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
-        dataframe.to_excel(writer, sheet_name = field, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
+#     for i, field in enumerate(fields):
+#         dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
+#         dataframe.to_excel(writer, sheet_name = field, index = False)
 
 # print(storm_dfs[6][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
 # print(storm_dfs[6].dtypes)
