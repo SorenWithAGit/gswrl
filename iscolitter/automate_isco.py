@@ -196,10 +196,10 @@ fields = [
 
 # # # # # # write each combined DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data.xlsx") as writer:
-#     for i, field in enumerate(fields):
-#         dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
-#         dataframe.to_excel(writer, sheet_name = field, index = False)
+with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2025\2025_ISCO_Calulated_combined_Nutrient_Data_test.xlsx") as writer:
+    for i, field in enumerate(fields):
+        dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
+        dataframe.to_excel(writer, sheet_name = field, index = False)
 
-print(storm_dfs[12][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
+# print(storm_dfs[12][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
 # print(storm_dfs[12].dtypes)
