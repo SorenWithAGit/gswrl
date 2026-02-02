@@ -78,7 +78,7 @@ class San():
         
 
 
-    def KCL_data(self):
+    def KCl_data(self):
         """
         Function to manipulate data from self.data from the
         instrument for one extraction KCl.

@@ -59,7 +59,35 @@ def main(input_path, file_type, module, m_class, function, output_path, lab_id_p
                     DI_H3A_df.to_excel(writer, index = False)
         return DI_H3A_df
     
-    elif module == "cfa" and m_class == "San" and function == "KCL_data":
+    elif args.lab_id_path is not None and module == "cfa" and m_class == "San" and function == "KCl_Data":
+        KCl_df = pd.DataFrame(columns = [
+             "Lab ID",
+             "Sample Name",
+             "Sample Date",
+             "Sample Type", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
+        
+        for file in files:
+            run = gs.cfa.San(file, lab_id_path, sheet)
+            data = run.KCL_data()
+            KCl_df = pd.concat([KCl_df, data])
+        KCl_df = KCl_df.reindex(columns = [
+             "Lab ID",
+             "Sample Name",
+             "Sample Date",
+             "Sample Type", 
+             "Nitrate Nitrite- Results[mg N/liter]", 
+             "Ammonia- Results[mg N/liter]", 
+             "Phosphate- Results[mg P/liter]"])
+        KCl_df["Sample Date"] = KCl_df["Sample Date"].dt.strftime("%m/%d/%Y")
+        if args.output_path is not None:
+                with pd.ExcelWriter(output_path) as writer:
+                    KCl_df.to_excel(writer, index = False)
+        return KCl_df
+    
+    elif module == "cfa" and m_class == "San" and function == "KCl_data":
         KCl_df = pd.DataFrame(columns = [
             "SampleIdentity",
             "Nitrate Nitrite- Results[mg N/liter]",
