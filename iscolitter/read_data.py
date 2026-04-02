@@ -3,86 +3,181 @@ import pandas as pd
 pd.options.mode.copy_on_write = True
 
 class sampler_data:
-    def read_txt(txt):
+
+    def read_raw_volumes(txt):
+        cols = ["Site", "Date", "Units", "Sample", "bottle",
+                "Time", "Level (ft)", "Flow Rate (cfs)", 
+                "Total Flow (cf)"]
+        dates = []
+        sep_lines = []
+
+        isco_df = pd.DataFrame(columns = cols)
+        
+        with open(txt) as file:
+            lines = file.readlines()
+            # print("# of Lines: " + str(len(lines)))
+            # iterate through file lines until start of table is found
+        
+        for line_count, line in enumerate(lines):
+            if "------- ------ ----  -----  ----- -------------" in line:
+                begin_line = line_count + 1
+                # print("begin line: " + str(begin_line))
+                # print(lines[begin_line])
+                break
+        # print(str(file) + "Begin Line: " + str(begin_line))
+
+        # iterate through file lines until end of table is found
+        for line_count, line in enumerate(lines[begin_line:]):
+            if "----------------------------------------" in line:
+                end_line = begin_line + line_count + 1
+                # print("end line: " + str(end_line))
+                break
+
+        if lines[begin_line - 2] =="\n":
+            site = lines[begin_line - 10].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 4] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 3] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 5] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        else:
+            try:
+                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+            except:
+                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        # print(site)
+
+        units = lines[begin_line - 2].split(" ")[-1].strip("\n")    
+        # print(units)
+
+        for ln_num in range(begin_line, end_line):
+            if "--------------------" in lines[ln_num] and "----------------------------------------" not in lines[ln_num]:
+                sep_lines.append(ln_num)
+                date = lines[ln_num].split(" ")[2]
+                dates.append(date)
+        sep_lines.append(end_line-1)
+        line_pairs = list(zip(sep_lines, sep_lines[1:]))
+        date_pairs = list(zip(dates, dates[1:]))
+        print(sep_lines)
+        # print(dates)
+        # print(line_pairs)
+        print(date_pairs)
+
+        for l, ln_pair in enumerate(line_pairs):
+            records = []
+            for i in range(*ln_pair):
+                if "--------------------" not in lines[i]:
+                    if lines[i].split() != []:
+                        record = lines[i].split()
+                        record.insert(0, units)
+                        record.insert(0, dates[l])
+                        record.insert(0, site)
+                        records.append(record)
+                        # print(record)
+            df = pd.DataFrame(records, columns = cols)
+            # print(df)
+            isco_df = pd.concat([isco_df, df], ignore_index = True)
+        # print(isco_df)
+        return isco_df
+
+    def read_total_vol(txt):
         sampler_df = pd.DataFrame(columns = ["Site", "Date", "Units", "# of Samples",
                                         "Start Volume", "End Volume"])
         with open(txt) as file:
             lines = file.readlines()
             # print("# of Lines: " + str(len(lines)))
             # iterate through file lines until start of table is found
-            for line_count, line in enumerate(lines):
-                if "------- ------ ----  -----  ----- -------------" in line:
-                    begin_line = line_count + 1
-                    # print("begin line: " + str(begin_line))
-                    # print(lines[begin_line])
-                    break
-            # print(str(file) + "Begin Line: " + str(begin_line))
+        for line_count, line in enumerate(lines):
+            if "------- ------ ----  -----  ----- -------------" in line:
+                begin_line = line_count + 1
+                # print("begin line: " + str(begin_line))
+                # print(lines[begin_line])
+                break
+        # print(str(file) + "Begin Line: " + str(begin_line))
 
-            # iterate through file lines until end of table is found
-            for line_count, line in enumerate(lines[begin_line:]):
-                if "----------------------------------------" in line:
-                    end_line = begin_line + line_count + 1
-                    # print("end line: " + str(end_line))
-                    break
+        # iterate through file lines until end of table is found
+        for line_count, line in enumerate(lines[begin_line:]):
+            if "----------------------------------------" in line:
+                end_line = begin_line + line_count + 1
+                # print("end line: " + str(end_line))
+                break
 
-            # iterate through file lines until first sample volume is found
-            for line_count, line in enumerate(lines[begin_line:end_line]):
-                if "    1     1   " in line:
-                    start_vol_line = begin_line + line_count
-                    break
+        # iterate through file lines until first sample volume is found
+        for line_count, line in enumerate(lines[begin_line:end_line]):
+            if "    1     1   " in line:
+                start_vol_line = begin_line + line_count
+                break
 
-            end_vol_line = lines[end_line - 2]
-            # print("Site: " + lines[begin_line - 9].strip(" ").split("SITE:")[1]. replace(" ", ""))
-            if lines[begin_line - 2] =="\n":
-                site = lines[begin_line - 10].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-            elif lines[begin_line - 4] == "\n":
-                site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-            elif lines[begin_line - 3] == "\n":
-                site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-            elif lines[begin_line - 5] == "\n":
-                site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-            else:
-                try:
-                    site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
-                except:
-                    site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        end_vol_line = lines[end_line - 2]
+        # print("Site: " + lines[begin_line - 9].strip(" ").split("SITE:")[1]. replace(" ", ""))
+        if lines[begin_line - 2] =="\n":
+            site = lines[begin_line - 10].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 4] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 3] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        elif lines[begin_line - 5] == "\n":
+            site = lines[begin_line - 9].strip(" ").split("SITE:")[1].strip("\n").replace(" ", "").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+        else:
+            try:
+                site = lines[begin_line -8].split("   SITE: ")[1].strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
+            except:
+                site = lines[begin_line - 8].strip("   SITE:  ").strip("\n").replace("-A", "").replace("A-1", "").replace("A", "").replace(" ","")
 
-            if lines[begin_line].split(" ")[2] == "":
-                date = lines[begin_line].split(" ")[3]
-            else: 
-                date = lines[begin_line].split(" ")[2]
-            units = lines[begin_line - 2].split(" ")[-1].strip("\n")
-            # if end_vol_line.split(" ")[4] == " ":
-            #     sample_num = end_vol_line.split(" ")[2].strip("\n")
-            # elif end_vol_line.split(" ")[3] != " ":
-            #     sample_num = end_vol_line.split(" ")[3].strip("\n")
-            # elif end_vol_line.split(" ")[4] != " ":
-            #     sample_num = end_vol_line.split(" ")[4].strip("\n")
-            
-            if end_vol_line.split(" ")[1].strip("\n") == "" and end_vol_line.split(" ")[2] != "":
-                sample_num = end_vol_line.split(" ")[2].strip("\n")
-            elif end_vol_line.split(" ")[3].strip("\n") == "":
-                sample_num = end_vol_line.split(" ")[4].strip("\n")
-            elif end_vol_line.split(" ")[2].strip("\n") == "" and end_vol_line.split(" ")[3] != "" and end_vol_line.split(" ")[4] == "":
-                sample_num = end_vol_line.split(" ")[3].strip("\n")
+        if lines[begin_line].split(" ")[2] == "":
+            date = lines[begin_line].split(" ")[3]
+        else: 
+            date = lines[begin_line].split(" ")[2]
+        units = lines[begin_line - 2].split(" ")[-1].strip("\n")
+        # if end_vol_line.split(" ")[4] == " ":
+        #     sample_num = end_vol_line.split(" ")[2].strip("\n")
+        # elif end_vol_line.split(" ")[3] != " ":
+        #     sample_num = end_vol_line.split(" ")[3].strip("\n")
+        # elif end_vol_line.split(" ")[4] != " ":
+        #     sample_num = end_vol_line.split(" ")[4].strip("\n")
+        
+        if end_vol_line.split(" ")[1].strip("\n") == "" and end_vol_line.split(" ")[2] != "":
+            # print("1st if: " + str(end_vol_line.split(" ")))
+            sample_num = end_vol_line.split(" ")[2].strip("\n")
+        elif end_vol_line.split(" ")[3].strip("\n") == "":
+            # print(end_vol_line.split(" "))
+            sample_num = end_vol_line.split(" ")[4].strip("\n")
+        elif end_vol_line.split(" ")[2].strip("\n") == "" and end_vol_line.split(" ")[3] != "" and end_vol_line.split(" ")[4] == "":
+            sample_num = end_vol_line.split(" ")[3].strip("\n")
+        
+        # for ln_num in range(start_vol_line, end_vol_line):
+        #     if "--------------------" in lines[ln_num]:
+        #         prev_day_vol_ln = ln_num -1
+        #         new_day_date_ln = ln_num
+        #         new_start_vol_ln = ln_num + 1
 
-            start_volume = float(lines[start_vol_line].split(" ")[-1].strip("\n"))
-            end_volume = float(end_vol_line.split(" ")[-1].strip("\n"))
-            sampler_df["Site"] = [site]
-            sampler_df["Date"] = [date]
-            sampler_df["Units"] = [units]
-            sampler_df["# of Samples"] = [sample_num]
-            sampler_df["Start Volume"] = [start_volume]
-            sampler_df["End Volume"] = [end_volume]
-            sampler_df["Date"] = pd.to_datetime(sampler_df["Date"])
-            sampler_df["Date"] = sampler_df["Date"].dt.strftime("%m-%d-%Y")
-                # print("SITE: " + site)
-                # print("DATE: " + date)
-                # print("UNITS: " + units)
-                # print("NUMBER OF SAMPLES: " + str(sample_num))
-                # print("START VOLUME: " + str(start_volume))
-                # print("END VOLUME: " + str(end_volume))
-                # print("TOTAL VOLUME: " + str(total_volume))
+        #         break
+        #     else:
+        #         pass
+
+        start_volume = float(lines[start_vol_line].split(" ")[-1].strip("\n"))
+        end_volume = float(end_vol_line.split(" ")[-1].strip("\n"))
+        sampler_df["Site"] = [site]
+        sampler_df["Date"] = [date]
+        sampler_df["Units"] = [units]
+        sampler_df["# of Samples"] = [sample_num]
+        sampler_df["Start Volume"] = [start_volume]
+        sampler_df["End Volume"] = [end_volume]
+        sampler_df["Date"] = pd.to_datetime(sampler_df["Date"])
+        sampler_df["Date"] = sampler_df["Date"].dt.strftime("%m-%d-%Y")
+            # print("SITE: " + site)
+            # print("DATE: " + date)
+            # print("UNITS: " + units)
+            # print("NUMBER OF SAMPLES: " + str(sample_num))
+            # print("START VOLUME: " + str(start_volume))
+            # print("END VOLUME: " + str(end_volume))
+            # print("TOTAL VOLUME: " + str(total_volume))
+
+
+
+
+
         return sampler_df
 
 
