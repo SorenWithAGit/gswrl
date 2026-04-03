@@ -54,15 +54,19 @@ class sampler_data:
         for ln_num in range(begin_line, end_line):
             if "--------------------" in lines[ln_num] and "----------------------------------------" not in lines[ln_num]:
                 sep_lines.append(ln_num)
-                date = lines[ln_num].split(" ")[2]
+                date_line = lines[ln_num].split(" ")
+                if "" in date_line:
+                    date_line.remove("")
+                # print(date_line)
+                date = date_line[2]
                 dates.append(date)
         sep_lines.append(end_line-1)
         line_pairs = list(zip(sep_lines, sep_lines[1:]))
         date_pairs = list(zip(dates, dates[1:]))
-        print(sep_lines)
+        # print(sep_lines)
         # print(dates)
         # print(line_pairs)
-        print(date_pairs)
+        # print(date_pairs)
 
         for l, ln_pair in enumerate(line_pairs):
             records = []
