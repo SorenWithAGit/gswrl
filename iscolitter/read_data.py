@@ -199,12 +199,13 @@ class lab_data:
                 lab_data.at[entry, "Phosphate- Results[mg P/liter]"] = 0.05
                 
         nutrient_data = lab_data[lab_data["Sample Type"] == "N"]
+        # print(nutrient_data)
         rep_lst = []
         site_lst = []
         for ind in nutrient_data.index:
-            site = nutrient_data["Sample Name"][ind].split(" ")[0]
+            site = nutrient_data["Sample Name"][ind].split()[0]
             site_lst.append(site)
-            rep = nutrient_data["Sample Name"][ind].split(" ")[1]
+            rep = nutrient_data["Sample Name"][ind].split()[1]
             rep_lst.append(rep)
         nutrient_data["Site"] = site_lst
         nutrient_data["Replicate"] = rep_lst
@@ -225,37 +226,42 @@ class lab_data:
         storm_df["NO3-N [mg N/liter] smpl 2"] = "NaN"
         storm_df["NH3-N [mg N/liter] smpl 2"] = "NaN"
         storm_df["PO4-P [mg P/liter] smpl 2"] = "NaN"
-        
+        # print(nutrient_data)
 
         for i in sampler_data.index:
             for iter in nutrient_data.index:
-                if sampler_data["Site"][i] == nutrient_data["Sample Name"][iter].split(" ")[0] \
+                # print(nutrient_data["Sample Name"][iter].split())
+                if sampler_data["Site"][i] == nutrient_data["Sample Name"][iter].split()[0] \
                 and sampler_data["Date"][i] == nutrient_data["Sample Date"][iter] \
                 and nutrient_data["Replicate"][iter] == "#1":
-                   storm_df.at[i, "NO3-N [mg N/liter] smpl 1"] = nutrient_data["Nitrate Nitrite- Results[mg N/liter]"][iter]
-                   storm_df.at[i, "NH3-N [mg N/liter] smpl 1"] = nutrient_data["Ammonia- Results[mg N/liter]"][iter]
-                   storm_df.at[i, "PO4-P [mg P/liter] smpl 1"] = nutrient_data["Phosphate- Results[mg P/liter]"][iter]
+                    storm_df.at[i, "NO3-N [mg N/liter] smpl 1"] = nutrient_data["Nitrate Nitrite- Results[mg N/liter]"][iter]
+                    storm_df.at[i, "NH3-N [mg N/liter] smpl 1"] = nutrient_data["Ammonia- Results[mg N/liter]"][iter]
+                    storm_df.at[i, "PO4-P [mg P/liter] smpl 1"] = nutrient_data["Phosphate- Results[mg P/liter]"][iter]
                     # print(str(sampler_data["Site"][i]) + " Found! " + str(nutrient_data["Sample Name"][iter]) + " " + \
                     #       str(nutrient_data["Sample Date"][iter]))
-                    # no3_lst_1.append(nutrient_data["Nitrate Nitrite- Results[mg N/liter]"][iter])
-                    # nh3_lst_1.append(nutrient_data["Ammonia- Results[mg N/liter]"][iter])
-                    # po4_lst_1.append(nutrient_data["Phosphate- Results[mg P/liter]"][iter])
-                    # no3_lst_2.append("NaN")
-                    # nh3_lst_2.append("NaN")
-                    # po4_lst_2.append("NaN")
+                    no3_lst_1.append(nutrient_data["Nitrate Nitrite- Results[mg N/liter]"][iter])
+                    nh3_lst_1.append(nutrient_data["Ammonia- Results[mg N/liter]"][iter])
+                    po4_lst_1.append(nutrient_data["Phosphate- Results[mg P/liter]"][iter])
+                    no3_lst_2.append("NaN")
+                    nh3_lst_2.append("NaN")
+                    po4_lst_2.append("NaN")
+            else:
+                pass
 
 
-        # storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(no3_lst_1)
-        # storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(nh3_lst_1)
-        # storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(po4_lst_1)
-        # storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(no3_lst_2)
-        # storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(nh3_lst_2)
-        # storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(po4_lst_2)
+
+
+        storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(no3_lst_1)
+        storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(nh3_lst_1)
+        storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(po4_lst_1)
+        storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(no3_lst_2)
+        storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(nh3_lst_2)
+        storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(po4_lst_2)
 
 
         for i in storm_df.index:
             for iter in nutrient_data.index:
-                            if storm_df["Site"][i] == nutrient_data["Sample Name"][iter].split(" ")[0] \
+                            if storm_df["Site"][i] == nutrient_data["Sample Name"][iter].split()[0] \
                                 and storm_df["Date"][i] == nutrient_data["Sample Date"][iter] and nutrient_data["Replicate"][iter] == "#2":
                                 # print(str(sampler_data["Site"][i]) + " Found! " + str(nutrient_data["Sample Name"][iter]) + " " + \
                                 #       str(nutrient_data["Sample Date"][iter]))
@@ -292,6 +298,8 @@ class lab_data:
 
             if storm_df["PO4-P [mg P/liter] smpl 2"][i] == "NaN":
                 storm_df.at[i, "PO4-P [mg P/liter] avg"] = storm_df["PO4-P [mg P/liter] smpl 1"][i]
+
+        # print(storm_df)
                 
         return storm_df
 
@@ -311,7 +319,7 @@ class lab_data:
         nutrient_acid_data = lab_data[lab_data["Sample Type"] == "NutAcid"]
         na_rep_lst = []
         for index in nutrient_acid_data.index:
-            na_rep = nutrient_acid_data["Sample Name"][index].split(" ")[1]
+            na_rep = nutrient_acid_data["Sample Name"][index].split()[1]
             na_rep_lst.append(na_rep)
         nutrient_acid_data["Replicate"] = na_rep_lst
         
@@ -325,31 +333,34 @@ class lab_data:
         acid_storm_df = sampler_data
         for id in sampler_data.index:
             for count in nutrient_acid_data.index:
-                if sampler_data["Site"][id] == nutrient_acid_data["Sample Name"][count].split(" ")[0] \
-                    and sampler_data["Date"][id] == nutrient_acid_data["Sample Date"][count] and nutrient_acid_data["Replicate"][count] == "#1":
-                   acid_storm_df.at[id, "NO3-N [mg N/liter] smpl 1"] = nutrient_acid_data["Nitrate Nitrite- Results[mg N/liter]"][count]
-                   acid_storm_df.at[id, "NH3-N [mg N/liter] smpl 1"] = nutrient_acid_data["Ammonia- Results[mg N/liter]"][count]
-                   acid_storm_df.at[id, "PO4-P [mg P/liter] smpl 1"] = nutrient_acid_data["Phosphate- Results[mg P/liter]"][count]
+                if sampler_data["Site"][id] == nutrient_acid_data["Sample Name"][count].split()[0] \
+                and sampler_data["Date"][id] == nutrient_acid_data["Sample Date"][count] \
+                and nutrient_acid_data["Replicate"][count] == "#1":
+                    acid_storm_df.at[id, "NO3-N [mg N/liter] smpl 1"] = nutrient_acid_data["Nitrate Nitrite- Results[mg N/liter]"][count]
+                    acid_storm_df.at[id, "NH3-N [mg N/liter] smpl 1"] = nutrient_acid_data["Ammonia- Results[mg N/liter]"][count]
+                    acid_storm_df.at[id, "PO4-P [mg P/liter] smpl 1"] = nutrient_acid_data["Phosphate- Results[mg P/liter]"][count]
                     # print(str(sampler_data["Site"][id]) + " Found! " + str(nutrient_acid_data["Sample Name"][count]) + " " + \
                     #       str(nutrient_acid_data["Sample Date"][count]))
-                    # acid_no3_lst_1.append(nutrient_acid_data["Nitrate Nitrite- Results[mg N/liter]"][count])
-                    # acid_nh3_lst_1.append(nutrient_acid_data["Ammonia- Results[mg N/liter]"][count])
-                    # acid_po4_lst_1.append(nutrient_acid_data["Phosphate- Results[mg P/liter]"][count])
-                    # acid_no3_lst_2.append("NaN")
-                    # acid_nh3_lst_2.append("NaN")
-                    # acid_po4_lst_2.append("NaN")
+                    acid_no3_lst_1.append(nutrient_acid_data["Nitrate Nitrite- Results[mg N/liter]"][count])
+                    acid_nh3_lst_1.append(nutrient_acid_data["Ammonia- Results[mg N/liter]"][count])
+                    acid_po4_lst_1.append(nutrient_acid_data["Phosphate- Results[mg P/liter]"][count])
+                    acid_no3_lst_2.append("NaN")
+                    acid_nh3_lst_2.append("NaN")
+                    acid_po4_lst_2.append("NaN")
+                else:
+                    pass
 
 
-        # acid_storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(acid_no3_lst_1)
-        # acid_storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(acid_nh3_lst_1)
-        # acid_storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(acid_po4_lst_1)
-        # acid_storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(acid_no3_lst_2)
-        # acid_storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(acid_nh3_lst_2)
-        # acid_storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(acid_po4_lst_2)
+        acid_storm_df["NO3-N [mg N/liter] smpl 1"] = pd.Series(acid_no3_lst_1)
+        acid_storm_df["NH3-N [mg N/liter] smpl 1"] = pd.Series(acid_nh3_lst_1)
+        acid_storm_df["PO4-P [mg P/liter] smpl 1"] = pd.Series(acid_po4_lst_1)
+        acid_storm_df["NO3-N [mg N/liter] smpl 2"] = pd.Series(acid_no3_lst_2)
+        acid_storm_df["NH3-N [mg N/liter] smpl 2"] = pd.Series(acid_nh3_lst_2)
+        acid_storm_df["PO4-P [mg P/liter] smpl 2"] = pd.Series(acid_po4_lst_2)
 
         for i in acid_storm_df.index:
             for iter in nutrient_acid_data.index:
-                    if acid_storm_df["Site"][i] == nutrient_acid_data["Sample Name"][iter].split(" ")[0] \
+                    if acid_storm_df["Site"][i] == nutrient_acid_data["Sample Name"][iter].split()[0] \
                         and acid_storm_df["Date"][i] == nutrient_acid_data["Sample Date"][iter] and nutrient_acid_data["Replicate"][iter] == "#2":
                         # print(str(sampler_data["Site"][i]) + " Found! " + str(nutrient_acid_data["Sample Name"][iter]) + " " + \
                         #       str(nutrient_acid_data["Sample Date"][iter]))
