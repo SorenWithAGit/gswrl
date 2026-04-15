@@ -13,6 +13,7 @@ class conversions():
                 self.mm_per_ft = 25.4
                 self.ft_per_acre = 43560
                 self.acre_per_hectare = 2.47105
+                self.ton_per_kg = 0.00110231
                 # attributes of each field that remain constant
                 self.field_constants = {
                                         "field" : ["SW12", "SW17", "W1", 
@@ -148,6 +149,21 @@ class conversions():
                                         except:
                                                 po4_avg_lst.append(po4_s1_val)
                 return no3_s1_lst, no3_s2_lst, no3_avg_lst, nh3_s1_lst, nh3_s2_lst, nh3_avg_lst, po4_s1_lst, po4_s2_lst, po4_avg_lst
+        
+        def sediment_kg_per_ha(self, field, sediment_conc, total_storm):
+                area = self.field_df.loc[self.field_df["field"] == field, "area (ac)"]
+                sed_kg_per_ha = (sediment_conc*28.32*total_storm*2.471) / (1000*1000*area)
+                return sed_kg_per_ha
+        
+        def sediment_t_per_ac(self, sed_kg_per_ha):
+                sed_t_per_ac = (sed_kg_per_ha * 0.00110231) / 2.471
+                return sed_t_per_ac
+        
+c = conversions()
+kgc = c.sediment_kg_per_ha("SW12", 858.5, 6266)
+print(kgc)
+tac = c.sediment_t_per_ac(kgc)
+print(tac)
 
 
 # w13 = {"Site" : "Y14",
