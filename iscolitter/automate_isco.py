@@ -8,8 +8,8 @@ pd.options.mode.copy_on_write = True
 
 
 # Create paths to folders and lab data.
-root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2024"
-lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2024\wq_raw_data_2024.xlsx"
+root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2021"
+lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\2021\wq_raw_data_2021.xlsx"
 
 # Collect subfolders.
 isco_path = Path(root)
@@ -170,6 +170,7 @@ for site, df in dataframes.items():
     acid_storm_df["Date"] = pd.to_datetime(acid_storm_df["Date"])
     acid_storm_df["Date"] = acid_storm_df["Date"].dt.strftime("%m-%d-%Y")
     acid_storm_dfs.append(acid_storm_df)
+    print(acid_storm_df)
 
 
 fields = [
@@ -183,7 +184,7 @@ fields = [
 
 # # # # Write each storm DataFrame to new sheet in excel
 
-# with pd.ExcelWriter(r"I:\USDA-ARS\Merillyn Schantz\Riesel\Riesel Runoff\2024_isco_(Runoff).xlsx") as writer:
+# with pd.ExcelWriter(r"I:\USDA-ARS\Merillyn Schantz\Riesel\Riesel Runoff\2021_isco_(Runoff).xlsx") as writer:
 #     for i, field in enumerate(fields):
 #         dataframe = storm_dfs[i]
 #         dataframe.to_excel(writer, sheet_name = field, index = False)
@@ -197,10 +198,10 @@ fields = [
 
 # # # # # # write each combined DataFrame to new sheet in excel
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2024\2024_ISCO_Calulated_combined_Nutrient_Data_test.xlsx") as writer:
-    for i, field in enumerate(fields):
-        dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
-        dataframe.to_excel(writer, sheet_name = field, index = False)
+# with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2021\2021_ISCO_Calulated_combined_Nutrient_Data_test.xlsx") as writer:
+#     for i, field in enumerate(fields):
+#         dataframe = pd.concat([storm_dfs[i], acid_storm_dfs[i]])
+#         dataframe.to_excel(writer, sheet_name = field, index = False)
 
 # print(storm_dfs[12][["Site", "Date", "# of Samples", "Total Volume (ft3)", "NO3-N [mg N/liter] smpl 1"]])
 # print(storm_dfs[12].dtypes)
