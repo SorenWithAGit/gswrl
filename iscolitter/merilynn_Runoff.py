@@ -11,12 +11,9 @@ class date_range:
         date_df = pd.DataFrame({"Date" : date_range})
         return date_df
 
-# test_isco = rd.sampler_data.read_raw_volumes(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2021\Y8\2021_Y8_325.txt")
-# print(test_isco)
-
 # # Create paths to folders and lab data.
-root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2021"
-# lab_data_path = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\raw_data\wq_raw_data_2021.xlsx"
+root = r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\2019"
+
 
 # # Collect subfolders.
 isco_path = Path(root)
@@ -74,14 +71,49 @@ fields = [
     "Y8", "Y10", "Y13",
     "Y14"
 ]
+c = cal.conversions()
+dly_rnoff = []
 
-with pd.ExcelWriter(r"I:\USDA-ARS\Doug Smith\Riesel\Water Quaility\ISCO Raw\raw_isco\2021_raw_isco.xlsx") as writer:
+for i, field in enumerate(fields):
+    df = isco_dataframes[field]
+    df["Datetime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
+    df = df.iloc[:, [0, 9, 2, 3, 4, 6, 7, 8]]
+    daily_raw = c.raw_sampler_to_daily(df)
+    # print(daily_raw)
+    daily_t_vol = c.total_vol_ft3(daily_raw)
+    # print(daily_t_vol)
+    daily_raw["Total Volume (ft3)"] = daily_t_vol
+    mm = c.ft3_to_mm(daily_raw)
+    daily_raw["Total Volume (mm)"] = mm
+    daily_raw = daily_raw.iloc[:, [1, 0, 4, 5, 6]]
+    daily_raw.set_index("Datetime", inplace = True)
+    all_dates = pd.date_range(start = "2019-01-01", end = "2019-12-31", freq = "D").normalize()
+    daily_raw = daily_raw.reindex(all_dates)
+    daily_raw["Site"] = field
+    daily_raw = daily_raw.fillna(0)
+    dly_rnoff.append(daily_raw)
+    print(daily_raw)
+
+daily_runoffs = {
+    "SW12" : dly_rnoff[0],
+    "SW17" : dly_rnoff[1],
+    "W1" : dly_rnoff[2],
+    "W6" : dly_rnoff[6],
+    "W10" : dly_rnoff[3],
+    "W12" : dly_rnoff[4],
+    "W13" : dly_rnoff[5],
+    "Y2" : dly_rnoff[10],
+    "Y6" : dly_rnoff[11],
+    "Y8" : dly_rnoff[12],
+    "Y10" : dly_rnoff[7],
+    "Y13" : dly_rnoff[8],
+    "Y14" : dly_rnoff[9]
+}
+
+with pd.ExcelWriter(r"I:\USDA-ARS\Merillyn Schantz\Riesel\Riesel Runoff\calculated_runoff\2019_calculated_isco_(Runoff).xlsx") as writer:
     for i, field in enumerate(fields):
-        dataframe = isco_dataframes[field]
-        dataframe["Datetime"] = pd.to_datetime(dataframe["Date"] + " " + dataframe["Time"])
-        dataframe = dataframe.iloc[:, [0, 9, 2, 3, 4, 6, 7, 8]]
-        print(dataframe)
-        dataframe.to_excel(writer, sheet_name = field, index = False)
+        dataframe = daily_runoffs[field]
+        dataframe.to_excel(writer, sheet_name = field, index = True)
 
 ############################################################
 
