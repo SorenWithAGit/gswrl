@@ -59,9 +59,13 @@ class conversions():
                                 if self.field_df["field"][id] == storm_df["Site"][i] and storm_df["Units"][i] == "cf":
                                         # print(str(storm_df["Site"][i]) + " has units: " + str(storm_df["Units"][i]) + " and sampling interval: " + \
                                         #       str(self.field_df["sampling interval"][id]))
-                                        vol = storm_df["End Volume"][i] - storm_df["Start Volume"][i] + self.field_df["sampling interval"][id]
-                                        t_vol.append(vol)
-                                        continue
+                                        try:
+                                                vol = storm_df["End Volume"][i] - storm_df["Start Volume"][i] + self.field_df["sampling interval"][id]
+                                                t_vol.append(vol)
+                                                continue
+                                        except:
+                                                vol = storm_df["Total Flow (cf)"][i] + self.field_df["sampling interval"][id]
+                                                t_vol.append(vol)
 
                                 elif self.field_df["field"][id] == storm_df["Site"][i] and \
                                 storm_df["Units"][i] == "Mgal":
@@ -71,9 +75,14 @@ class conversions():
                                         #       + " difference: " + str((storm_df["End Volume"][i] - storm_df["Start Volume"][i])) + " Total Mgal: " + \
                                         #         str((storm_df["End Volume"][i] - storm_df["Start Volume"][i]) + self.field_df["sampling interval"][id]) + \
                                         #         " Total (ft3): " + str(((storm_df["End Volume"][i] - storm_df["Start Volume"][i]) + self.field_df["sampling interval"][id])*133700))
-                                        vol = ((storm_df["End Volume"][i] - storm_df["Start Volume"][i]) + self.field_df["sampling interval"][id])*133700
-                                        t_vol.append(vol)
-                                        continue
+                                        try:
+                                                vol = ((storm_df["End Volume"][i] - storm_df["Start Volume"][i]) + self.field_df["sampling interval"][id])*133700
+                                                t_vol.append(vol)
+                                                continue
+                                        except:
+                                                vol = storm_df["Total Flow (cf)"][i] + self.field_df["sampling interval"][id]*133700
+                                                t_vol.append(vol)
+                                                continue 
                 return t_vol
 
 
@@ -159,11 +168,21 @@ class conversions():
                 sed_t_per_ac = (sed_kg_per_ha * 0.00110231) / 2.471
                 return sed_t_per_ac
         
-c = conversions()
-kgc = c.sediment_kg_per_ha("SW12", 858.5, 6266)
-print(kgc)
-tac = c.sediment_t_per_ac(kgc)
-print(tac)
+        def raw_sampler_to_daily(self, df):
+                daily_df = df.groupby(df["Datetime"].dt.date).agg(
+                                                                Site = ("Site", "last"),
+                                                                Units = ("Units", "last"),
+                                                                Samples = ("Sample", "last"),
+                                                                Total_Vol = ("Total Flow (cf)", lambda x: float(x.iloc[-1]) - float(x.iloc[0]))
+                                                                ).reset_index()
+                daily_df = daily_df.rename(columns = {"Total_Vol" : "Total Flow (cf)"})
+                return daily_df
+        
+# c = conversions()
+# kgc = c.sediment_kg_per_ha("SW12", 858.5, 6266)
+# print(kgc)
+# tac = c.sediment_t_per_ac(kgc)
+# print(tac)
 
 
 # w13 = {"Site" : "Y14",
