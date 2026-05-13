@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 pd.options.mode.copy_on_write = True
 
@@ -10,7 +11,7 @@ class conversions():
                 self.mg_per_kg = 1000
                 self.l_per_ft3 = 28.3168
                 self.in_per_ft = 12
-                self.mm_per_ft = 25.4
+                self.mm_per_in = 25.4
                 self.ft_per_acre = 43560
                 self.acre_per_hectare = 2.47105
                 self.ton_per_kg = 0.00110231
@@ -92,7 +93,7 @@ class conversions():
                 for i in storm_df.index:
                         for id in self.field_df.index:
                                 if self.field_df["field"][id] == storm_df["Site"][i]:
-                                        mm_vol = (storm_df["Total Volume (ft3)"][i] * self.in_per_ft * self.mm_per_ft) \
+                                        mm_vol = (storm_df["Total Volume (ft3)"][i] * self.in_per_ft * self.mm_per_in) \
                                         / (self.field_df["area (ac)"][id] * self.ft_per_acre)
                                         mm_lst
                                         mm_lst.append(mm_vol)
@@ -177,6 +178,56 @@ class conversions():
                                                                 ).reset_index()
                 daily_df = daily_df.rename(columns = {"Total_Vol" : "Total Flow (cf)"})
                 return daily_df
+        
+class flow_calculator():
+
+        def __init__():
+                field_constants = {
+                                        "field" : ["SW12", "SW17", "W1", 
+                                                "W6", "W10", "W12",
+                                                "W13", "Y2", "Y6", 
+                                                "Y8", "Y10", "Y13", 
+                                                "Y14"],
+                                        "area (ac)" : [2.97, 2.99, 174.00,
+                                                42.30, 19.80, 9.90,
+                                                11.30, 132.00, 16.30,
+                                                20.80, 18.50, 11.40,
+                                                5.60],
+                                        "landuse" : ["pasture", "pasture", "mixed",
+                                                "mixed", "pasture", "cultivated",
+                                                "cultivated", "mixed", "cultivated",
+                                                "cultivated"], 
+                                        "flow constants" : {
+                                                "SW12" : [(1.93, 1.755), (2.371, 1.93), (2.574, 2.088), (2.488, 2.577)],
+                                                "SW17" : [(1.838, 1.723), (2.364, 1.929), (2.593, 2.124), (2.532, 2.239)],
+                                                "W1" : [(1.657, 2.72), (2.58, 3.138), (3.455, 4.047)],
+                                                "W6" : [(11.67, 2.508), (21.92, 2.914)],
+                                                "W10" : [(11.67, 2.508), (21.92, 2.914)],
+                                                "W12" : [(14.16, 2.58), (12.59, 2.53), (13.79, 2.66)],
+                                                "W13" : [(15.68, 2.6), (13.07, 2.52), (14.17, 2.64)],
+                                                "Y2" : [(12.6, 2.55), (15.03, 2.9992), (15.809, 3.11567)],
+                                                "Y6" : [(10.24, 2.476), (15.18, 2.751), (18.65, 3.039)],
+                                                "Y8" : [(11.67, 2.508), (21.92, 2.914)],
+                                                "Y10" : [(11.67, 2.508), (21.92, 2.914)],
+                                                "Y13" : [(14.0, 2.56), (12.94, 2.51), (13.84, 2.64)],
+                                                "Y14" : [(13.15, 2.55), (14.15, 2.64)]
+                                        },
+                                        "flow checks" : {
+                                                "SW12" : [0.3, 0.6, 1.1, 1.1],
+                                                "SW17" : [0.3, 0.6, 1.5, 1.5],
+                                                "W1" : [0.399, 0.699, 0.699],
+                                                "W6" : [0.219, 0.219],
+                                                "W10" : [0.219, 0.219],
+                                                "W12" : [0.1, 0.5, 0.5],
+                                                "W13" : [0.1, 0.5, 0.5],
+                                                "Y2" : [0.65, 0.9, 0.9],
+                                                "Y6" : [0.249, 0.499, 0.499],
+                                                "Y8" : [0.219, 0.219],
+                                                "Y10" : [0.219, 0.219],
+                                                "Y13" : [0.2, 0.6, 0.6],
+                                                "Y14" : [0.6, 0.6]
+                                        }
+                }
         
 # c = conversions()
 # kgc = c.sediment_kg_per_ha("SW12", 858.5, 6266)
