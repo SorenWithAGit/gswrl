@@ -177,12 +177,13 @@ class sampler_data:
             # print("START VOLUME: " + str(start_volume))
             # print("END VOLUME: " + str(end_volume))
             # print("TOTAL VOLUME: " + str(total_volume))
-
-
-
-
-
         return sampler_df
+    
+
+class calculated_data():
+    def read_subdly_runoff(excel_file):
+        df = pd.read_excel(excel_file)
+        return df
 
 
 class lab_data:

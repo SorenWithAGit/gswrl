@@ -179,38 +179,39 @@ class conversions():
                 daily_df = daily_df.rename(columns = {"Total_Vol" : "Total Flow (cf)"})
                 return daily_df
         
-class flow_calculator():
+class runoff_calculator():
 
-        def __init__():
-                field_constants = {
-                                        "field" : ["SW12", "SW17", "W1", 
-                                                "W6", "W10", "W12",
-                                                "W13", "Y2", "Y6", 
-                                                "Y8", "Y10", "Y13", 
-                                                "Y14"],
-                                        "area (ac)" : [2.97, 2.99, 174.00,
-                                                42.30, 19.80, 9.90,
-                                                11.30, 132.00, 16.30,
-                                                20.80, 18.50, 11.40,
-                                                5.60],
-                                        "landuse" : ["pasture", "pasture", "mixed",
-                                                "mixed", "pasture", "cultivated",
-                                                "cultivated", "mixed", "cultivated",
-                                                "cultivated"], 
+        def __init__(self):
+                self.field_constants = {
+                                        "area (ac)" :{
+                                                "SW12" : 2.97,
+                                                "SW17" : 2.99,
+                                                "W1" : 174.00,
+                                                "W6" : 42.30,
+                                                "W10" : 19.80,
+                                                "W12" : 9.90,
+                                                "W13" : 11.30,
+                                                "Y2" : 132.00,
+                                                "Y6" : 16.30,
+                                                "Y8" : 20.80,
+                                                "Y10" : 18.50,
+                                                "Y13" : 11.40,
+                                                "Y14" : 5.60
+                                        },
                                         "flow constants" : {
-                                                "SW12" : [(1.93, 1.755), (2.371, 1.93), (2.574, 2.088), (2.488, 2.577)],
-                                                "SW17" : [(1.838, 1.723), (2.364, 1.929), (2.593, 2.124), (2.532, 2.239)],
-                                                "W1" : [(1.657, 2.72), (2.58, 3.138), (3.455, 4.047)],
-                                                "W6" : [(11.67, 2.508), (21.92, 2.914)],
-                                                "W10" : [(11.67, 2.508), (21.92, 2.914)],
-                                                "W12" : [(14.16, 2.58), (12.59, 2.53), (13.79, 2.66)],
-                                                "W13" : [(15.68, 2.6), (13.07, 2.52), (14.17, 2.64)],
-                                                "Y2" : [(12.6, 2.55), (15.03, 2.9992), (15.809, 3.11567)],
-                                                "Y6" : [(10.24, 2.476), (15.18, 2.751), (18.65, 3.039)],
-                                                "Y8" : [(11.67, 2.508), (21.92, 2.914)],
-                                                "Y10" : [(11.67, 2.508), (21.92, 2.914)],
-                                                "Y13" : [(14.0, 2.56), (12.94, 2.51), (13.84, 2.64)],
-                                                "Y14" : [(13.15, 2.55), (14.15, 2.64)]
+                                                "SW12" : [[1.93, 1.755], [2.371, 1.93], [2.574, 2.088], [2.488, 2.577]],
+                                                "SW17" : [[1.838, 1.723], [2.364, 1.929], [2.593, 2.124], [2.532, 2.239]],
+                                                "W1" : [[1.657, 2.72], [2.58, 3.138], [3.455, 4.047]],
+                                                "W6" : [[11.67, 2.508], [21.92, 2.914]],
+                                                "W10" : [[11.67, 2.508], [21.92, 2.914]],
+                                                "W12" : [[14.16, 2.58], [12.59, 2.53], [13.79, 2.66]],
+                                                "W13" : [[15.68, 2.6], [13.07, 2.52], [14.17, 2.64]],
+                                                "Y2" : [[12.6, 2.55], [15.03, 2.9992], [15.809, 3.11567]],
+                                                "Y6" : [[10.24, 2.476], [15.18, 2.751], [18.65, 3.039]],
+                                                "Y8" : [[11.67, 2.508], [21.92, 2.914]],
+                                                "Y10" : [[11.67, 2.508], [21.92, 2.914]],
+                                                "Y13" : [[14.0, 2.56], [12.94, 2.51], [13.84, 2.64]],
+                                                "Y14" : [[13.15, 2.55], [14.15, 2.64]]
                                         },
                                         "flow checks" : {
                                                 "SW12" : [0.3, 0.6, 1.1, 1.1],
@@ -228,6 +229,35 @@ class flow_calculator():
                                                 "Y14" : [0.6, 0.6]
                                         }
                 }
+
+        def flow_calculator(self, level_df):
+                site = "".join(level_df["site"].unique())
+                multiplier_list = self.field_constants["flow constants"][site]
+                check_list = self.field_constants["flow checks"][site]
+                active_checks = check_list[:-1]
+                # print(multiplier_list)
+                # print(check_list)
+
+                sublist_arr = np.array(multiplier_list, dtype=float)
+                multipliers_arr = sublist_arr[:, 0]  # First column: Multipliers
+                exponents_arr = sublist_arr[:, 1]  # Second column: Exponents
+
+                last_index = len(multiplier_list) - 1
+
+                clean_series = level_df["level (ft)"].to_numpy()
+                indices = np.searchsorted(active_checks, clean_series, side="right")
+
+                indices = np.where(indices >= len(active_checks), last_index, indices)
+
+                matched_multipliers = multipliers_arr[indices]
+                matched_exponents = exponents_arr[indices]
+
+                level_df["new cfs"] = (clean_series**matched_exponents) * matched_multipliers
+
+                level_df["new in/hr"] = ((level_df["new cfs"]*12*3600)/(self.field_constants["area (ac)"][site]*43560))
+
+                return level_df
+
         
 # c = conversions()
 # kgc = c.sediment_kg_per_ha("SW12", 858.5, 6266)
