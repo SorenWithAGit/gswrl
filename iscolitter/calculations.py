@@ -257,6 +257,11 @@ class runoff_calculator():
                 level_df["new in/hr"] = ((level_df["new cfs"]*12*3600)/(self.field_constants["area (ac)"][site]*43560))
 
                 return level_df
+        
+        def calculate_delta_t(self, runoff_df, flow_sum_df):
+                merged_df = pd.merge(flow_sum_df, runoff_df, on = "date")
+                merged_df["delta_t"] = merged_df["in"] / merged_df["flow (in/hr)"]
+                return merged_df
 
         
 # c = conversions()

@@ -119,11 +119,37 @@ class date_range:
 
 
 
-runoff_path = r"\\ARS-DATA\Teams\Riesel.Team\Georgie\runoff\2019\sw17_2019.xls"
+runoff_path = r"\\ARS-DATA\Teams\Riesel.Team\Georgie\runoff\2017\y22017.xls"
 calcd = rd.calculated_data
 df = calcd.read_subdly_runoff(runoff_path)
-print(df["level (ft)"].shape)
+webro = calcd.read_txt_runoff(r"\\ARS-DATA\Teams\Riesel.Team\Georgie\runoff\2017\daily_inches\y2\daily")
+webro["in"] = webro["in"].astype(float)
+print(webro)
+# print(df["level (ft)"].shape)
 
 rc = cal.runoff_calculator()
 new_df = rc.flow_calculator(df)
-print(new_df)
+# new_df["runoff (in)"] = new_df["new in/hr"] * .817
+new_df["date"] = pd.to_datetime(new_df[["year", "month", "day"]])
+# print(new_df)
+daily_df = new_df.iloc[:, [0, 10, 5, 6, 7, 8, 9]]
+
+flow_sum = daily_df.set_index("date").resample("D")[["flow (in/hr)"]].sum()
+# print(flow_sum)
+
+t = rc.calculate_delta_t(webro, flow_sum)
+average_t = t[t["delta_t"] != 0]["delta_t"].mean()
+print(average_t)
+
+daily_df["runoff (in)"] = daily_df["new in/hr"] * average_t
+print(daily_df)
+
+runoff_sum = daily_df.set_index("date").resample("D")["runoff (in)"].sum()
+comparison_runoff = pd.merge(webro, runoff_sum, on = "date")
+print(comparison_runoff)
+
+
+
+with pd.ExcelWriter(r"I:\USDA-ARS\Merillyn Schantz\Riesel\Riesel Runoff\calculated_runoff\daily\y2_2017.xlsx") as writer:
+    daily_df.to_excel(writer, sheet_name = "y2 2017 subdaily", index = True)
+    comparison_runoff.to_excel(writer, sheet_name = "y2 2017 daily", index = True)
