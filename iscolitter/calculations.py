@@ -230,8 +230,8 @@ class runoff_calculator():
                                         }
                 }
 
-        def flow_calculator(self, level_df):
-                site = "".join(level_df["site"].unique())
+        def flow_calculator(self, site, t_interval, level_df):
+                site = site
                 multiplier_list = self.field_constants["flow constants"][site]
                 check_list = self.field_constants["flow checks"][site]
                 active_checks = check_list[:-1]
@@ -255,6 +255,8 @@ class runoff_calculator():
                 level_df["new cfs"] = (clean_series**matched_exponents) * matched_multipliers
 
                 level_df["new in/hr"] = ((level_df["new cfs"]*12*3600)/(self.field_constants["area (ac)"][site]*43560))
+
+                level_df["JSKT runoff (mm)"] = ((level_df["new cfs"]*12*t_interval*60)/(self.field_constants["area (ac)"][site]*435600))
 
                 return level_df
         
