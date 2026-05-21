@@ -182,6 +182,13 @@ class conversions():
 class runoff_calculator():
 
         def __init__(self):
+                self.s_per_min = 60
+                self.min_per_hr = 60
+                self.s_per_hr = 3600
+                self.min_per_day = 1440
+                self.in_per_ft = 12
+                self.mm_per_in = 25.4
+                self.ft2_per_acre = 43560
                 self.field_constants = {
                                         "area (ac)" :{
                                                 "SW12" : 2.97,
@@ -254,9 +261,9 @@ class runoff_calculator():
 
                 level_df["new cfs"] = (clean_series**matched_exponents) * matched_multipliers
 
-                level_df["new in/hr"] = ((level_df["new cfs"]*12*3600)/(self.field_constants["area (ac)"][site]*43560))
+                level_df["new in/hr"] = ((level_df["new cfs"]*self.in_per_ft*self.s_per_hr)/(self.field_constants["area (ac)"][site]*self.ft2_per_acre))
 
-                level_df["JSKT runoff (mm)"] = ((level_df["new cfs"]*12*t_interval*60)/(self.field_constants["area (ac)"][site]*435600))
+                level_df["JSKT runoff (mm)"] = ((level_df["new cfs"]*self.in_per_ft*self.mm_per_in*(t_interval*self.s_per_min))/(self.field_constants["area (ac)"][site]*self.ft2_per_acre))
 
                 return level_df
         

@@ -190,12 +190,11 @@ class calculated_data():
         df = pd.DataFrame(columns = cols)
         with open(text_file) as file:
             lines = file.readlines()
-        for line in lines:
+        for line in lines[1:]:
             values = line.split()
             df.loc[len(df)] = [values[0], values[1], values[2], values[3], values[4]]
         df["date"] = pd.to_datetime(df[["year", "month", "day"]])
         df = df.iloc[:, [0, 5, 4]]
-        print(df)
         return df
 
 
