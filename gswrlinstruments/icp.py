@@ -27,7 +27,7 @@ class agilent():
     """
     This class represents the output file from the Agilent 5110.
     """
-    def __init__(self, file_name):
+    def __init__(self, file_name, lab_numbers_file = None, sheet = None):
         """
         reads the excel data as a pandas.DataFrame
 
@@ -36,6 +36,12 @@ class agilent():
         """
         self.file_name = file_name
         self.run_df = pd.read_excel(self.file_name)
+        if lab_numbers_file != None:
+            self.id_path = lab_numbers_file
+            self.ids = pd.read_excel(self.id_path, sheet_name = sheet)
+            self.ids =  self.ids.drop(columns = ["Rep", "Treatment", "Depth", "Distance",
+                          "Project Name", "Extraction", "Amount", 
+                          "Analysis Date", "Note"])
 
 
 
@@ -54,24 +60,31 @@ class agilent():
                 drop_indexes.append(ind)
         df = self.run_df.drop(drop_indexes, axis = 0)
         df = df.drop(["Rack:Tube"], axis = 1)
+        # print(df)
         df = df.rename(columns = {
-            df.columns[1] : "Aluminium",
-            df.columns[2] : "Calcium",
-            df.columns[3] : "Copper",
-            df.columns[4] : "Iron",
-            df.columns[5] : "Potassium",
-            df.columns[6] : "Magnesium",
-            df.columns[7] : "Manganese",
-            df.columns[8] : "Sodium",
-            df.columns[9] : "Phosphorus",
-            df.columns[10] : "Sulfur",
-            df.columns[11] : "Zinc"})
-        df["Arsenic"] = "NaN"
-        df["Ytrium"] = "NaN"
-        df = df.loc[: ["Aluminium", "Arsenic", "Calcium", "Copper",
-                    "Iron", "Potassium", "Magnesium", "Manganese",
-                    "Sodium", "Phosphorus", "Sulfur", "Zinc",
-                    "Ytrium"]]
+            df.columns[1] : "Aluminium (ppm)",
+            df.columns[2] : "Calcium (ppm)",
+            df.columns[3] : "Copper (ppm)",
+            df.columns[4] : "Iron (ppm)",
+            df.columns[5] : "Potassium (ppm)",
+            df.columns[6] : "Magnesium (ppm)",
+            df.columns[7] : "Manganese (ppm)",
+            df.columns[8] : "Sodium (ppm)",
+            df.columns[9] : "Phosphorus (ppm)",
+            df.columns[10] : "Sulfur (ppm)",
+            df.columns[11] : "Zinc (ppm)"})
+        df["Arsenic (ppm)"] = "NaN"
+        df["Ytrium (ppm)"] = "NaN"
+        if hasattr(self, "ids"):
+            df = df.rename(columns = {"SampleIdentity" : "Lab ID"})
+            df = pd.merge(df, self.ids, on = "Lab ID", how = "left")
+        print(df)
+        # df = df.loc[: ["Aluminium (ppm)", "Arsenic (ppm)", "Calcium (ppm)", "Copper (ppm)",
+        #             "Iron (ppm)", "Potassium (ppm)", "Magnesium (ppm)", "Manganese (ppm)",
+        #             "Sodium (ppm)", "Phosphorus (ppm)", "Sulfur (ppm)", "Zinc (ppm)",
+        #             "Ytrium (ppm)"]]
+        # df = df.iloc[:, [0, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13]]
+        # print(df)
         return df
 
 class varian():

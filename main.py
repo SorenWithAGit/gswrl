@@ -284,6 +284,7 @@ def main(input_path, file_type, module, m_class, function, output_path, lab_id_p
         agilent_df = pd.DataFrame(columns = [
             "Solution Label",
             "Aluminium (ppm)",
+            "Arsenic (ppm)",
             "Calcium (ppm)",
             "Copper (ppm)",
             "Iron (ppm)",
@@ -293,12 +294,14 @@ def main(input_path, file_type, module, m_class, function, output_path, lab_id_p
             "Sodium (ppm)", 
             "Phosphorus (ppm)",
             "Sulfur (ppm)",
-            "Zinc (ppm)" ])
+            "Zinc (ppm)",
+            "Ytrium (ppm)"])
     
         for file in files:
             icp_agilent = gs.icp.agilent(file)
             data = icp_agilent.data()
             agilent_df = pd.concat([agilent_df, data])
+            # print(data)
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     agilent_df.to_excel(writer, index = False)
