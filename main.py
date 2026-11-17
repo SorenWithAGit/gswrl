@@ -334,21 +334,19 @@ def main(input_path, file_type, module, m_class, function, output_path, lab_id_p
 
     ####################################################################
     # Logic to differentiate arguments passed for liquid TOC Data.
-    if module == "liquidtoc" and m_class == "FormacsTOC" and function == "data":
+    if module == "liquidtoc" and file_type == "csv" and m_class == "FormacsTOC" and function == "data":
         toc_df = pd.DataFrame(columns = [
             "Sample ID",
-            "TC Area",
-            "IC Area",
-            "TN Area",
             "TOC (ppm)",
-            "TC (ppm)",
             "TC (ppm)",
             "IC (ppm)",
             "TN (ppm)"])
         for file in files:
             run = gs.liquidtoc.FormacsTOC(file)
             data = run.data()[0]
-            toc_df = pd.concat([toc_df, data])
+            data = data.drop(columns = ["TC Area", "IC Area", "TN Area"])
+            print(data)
+            toc_df = pd.concat([toc_df, data], axis = 0)
         if args.output_path is not None:
                 with pd.ExcelWriter(output_path) as writer:
                     toc_df.to_excel(writer, index = False)

@@ -74,6 +74,8 @@ class San():
         else:
             df = df.iloc[:, [0, 1, 3, 2]]
 
+        # df.iloc[:, [1, 2, 3]] = df.iloc[:, [1, 2, 3]].mask(df.iloc[:, [1, 2, 3]] < 0, 0.05)
+
         return df
         
 

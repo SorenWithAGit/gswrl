@@ -78,7 +78,7 @@ class agilent():
         if hasattr(self, "ids"):
             df = df.rename(columns = {"SampleIdentity" : "Lab ID"})
             df = pd.merge(df, self.ids, on = "Lab ID", how = "left")
-        print(df)
+        # print(df)
         # df = df.loc[: ["Aluminium (ppm)", "Arsenic (ppm)", "Calcium (ppm)", "Copper (ppm)",
         #             "Iron (ppm)", "Potassium (ppm)", "Magnesium (ppm)", "Manganese (ppm)",
         #             "Sodium (ppm)", "Phosphorus (ppm)", "Sulfur (ppm)", "Zinc (ppm)",

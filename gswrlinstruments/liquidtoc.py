@@ -31,6 +31,7 @@ class FormacsTOC():
         Args:
             file_name (.csv): output csv file from instrument
         """
+        print(file_name)
         self.analytical_data = pd.DataFrame(columns = [
             "Sample ID",
             "TC Area",
@@ -83,26 +84,32 @@ class FormacsTOC():
             TOC_ppm.append(lines[smpl_TOC].split(",")[7].replace('"', ''))
             smpl_TOC += 5
         while smpl_TC <= len(lines):
-            if str(lines[smpl_TC].split(",")[0]) == str('" "'):
-                TC_area.append(lines[smpl_TC].split('"')[17])
+            # print(lines[smpl_TC].split(","))
+            if str(lines[smpl_TC].split(",")[0]) == str(' '):
+                TC_area.append(lines[smpl_TC].split(',')[8])
             else:
+                print(lines[smpl_TC])
                 TC_area.append(lines[smpl_TC].split('"')[1])
             TC_ppm.append(lines[smpl_TC].split(",")[7].replace('"', ''))
             smpl_TC += 5
         while smpl_IC <= len(lines):
-            if str(lines[smpl_IC].split(",")[0]) == str('" "'):
-                IC_area.append(lines[smpl_IC].split('"')[17])
+            # print(lines[smpl_IC].split(","))
+            if str(lines[smpl_IC].split(",")[0]) == str(' '):
+                IC_area.append(lines[smpl_IC].split(',')[8])
             else:
                 IC_area.append(lines[smpl_IC].split('"')[1])
             IC_ppm.append(lines[smpl_IC].split(",")[7].replace('"', ''))
             smpl_IC += 5
         while smpl_TN <= len(lines):
-            if str(lines[smpl_TN].split(",")[0]) == str('" "'):
-                TN_area.append(lines[smpl_TN].split('"')[17])
+            if str(lines[smpl_TN].split(",")[0]) == str(' '):
+                TN_area.append(lines[smpl_TN].split(',')[8])
             else:
                 TN_area.append(lines[smpl_TN].split('"')[1])
             TN_ppm.append(lines[smpl_TN].split(",")[7].replace('"', ''))
             smpl_TN += 5
+        # print(len(sample_ids))
+        # print(sample_ids)
+        # print(len(TC_area))
         analy_df['Sample ID'] = sample_ids
         analy_df["TC Area"] = TC_area
         analy_df["IC Area"] = IC_area
