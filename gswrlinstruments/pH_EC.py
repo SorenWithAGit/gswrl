@@ -1,5 +1,6 @@
 import io
 import pandas as pd
+import pdfplumber
 
 class accument450():
 
@@ -85,15 +86,95 @@ class accument450():
                     
                     df.to_excel(writer, sheet_name=sheet_name, index=False)
 
+class seven_excellence:
 
-file_path = r"D:\DATA_LOG\datalog.csv"
-output_path = r"I:\programming\pH_EC_example_results.xlsx"
+    def pdf_report(file_path):
+        pH_data = {"analysis" : None,
+                "date" : None,
+                "time" : None,
+                "pH" : None}
+        
+        EC_data = {"analysis" : None,
+                "date" : None,
+                "time" : None,
+                "conductivity (uS/cm)" : None}
+        
+        keywords = ["Date/Time", "pH", "Conductivity", "Value"]
 
-accu = accument450(file_path)
+        all_text = []
+        kw_lns = []
+        
+        with pdfplumber.open(file_path) as pdf:
+            for p, page in enumerate(pdf.pages):
+                plum_text = page.extract_text()
+                all_text += plum_text.split("\n")
 
-results = accu.data()
-print(type(results))
-for df in results:
-    print(df)
+        for line in all_text:
+            matched_index = next((i for i, kw in enumerate(keywords) if kw.lower() in line.lower()), None)
 
-accu.excel_export(results, output_path)
+            if matched_index is not None:
+                splt_ln = line.split(" ")
+                splt_ln.insert(0, matched_index)
+                kw_lns.append(splt_ln)
+                # print(splt_ln)
+
+
+        for i, item in enumerate(kw_lns):
+            if item[0] == 1:
+                try:
+                    if item[0] == 1 and kw_lns[2][1] == "Value":
+                        pH_data["analysis"] = "pH"
+                        pH_data["date"] = kw_lns[0][2]
+                        pH_data["time"] = kw_lns[0][3]
+                        pH_data["pH"] = kw_lns[2][2]
+                except:
+                    if item[0] == 1 and kw_lns[1][1] == "Value":
+                        pH_data["analysis"] = "pH"
+                        pH_data["date"] = kw_lns[0][2]
+                        pH_data["time"] = kw_lns[0][3]
+                        pH_data["pH"] = kw_lns[1][2]
+                break
+
+            elif item[0] == 2:
+                if item[0] == 2 and kw_lns[2][1] == "Value":
+                    EC_data["analysis"] = "EC"
+                    EC_data["date"] = kw_lns[0][2]
+                    EC_data["time"] = kw_lns[0][3]
+                    EC_data["conductivity (uS/cm)"] = kw_lns[2][2]
+                elif item[0] == 2 and kw_lns[1][1] == "Value":
+                    EC_data["analysis"] = "EC"
+                    EC_data["date"] = kw_lns[0][2]
+                    EC_data["time"] = kw_lns[0][3]
+                    EC_data["conductivity (uS/cm)"] = kw_lns[1][2]
+                break
+
+        # print(pH_data)
+        # print(EC_data)
+
+        return [data for data in (pH_data, EC_data) if any(val is not None for val in data.values())]
+
+# file_path = r"D:\DATA_LOG\datalog.csv"
+# output_path = r"I:\programming\pH_EC_example_results.xlsx"
+
+# accu = accument450(file_path)
+
+# results = accu.data()
+# print(type(results))
+# for df in results:
+#     print(df)
+
+# accu.excel_export(results, output_path)
+
+sev = seven_excellence
+ec = r"D:\report-20261118-164750.pdf"
+ec2 = r"D:\report-20261118-164725.pdf"
+
+ph = r"D:\report-20261118-164735.pdf"
+ph2 = r"D:\report-20261118-164716.pdf"
+
+filepaths = [ec, ec2, ph, ph2]
+
+for fp in filepaths:
+    data = sev.pdf_report(fp)
+    print(data)
+
